@@ -1,0 +1,10 @@
+h1. Nothing here yet.
+
+Plans for this jQuery plugin:
+
+*Create panel that slides into view from any direction
+*Remember last state a user left the panel in and use that on reload
+*Have a button that is clicked to toggle state. Be able to set content of
+this button in open/closed states (eg, a unicode up or down arrow) and/or set
+open/closed classes for CSS to do this vi a background image.
+
