@@ -1,0 +1,26 @@
+<html>
+	<head><title>Persistent Panel Examples</title></head>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+	<script type="text/javascript" src="../jquery.persistentpanel.js"></script>
+	<script type="text/javascript" src="jquery.cookie.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#panel').persistentPanel({
+				openFunction: function() {panel.fadeIn(500);}
+			});
+		});
+	</script>
+	<style type="text/css">
+		div#panel {width: 100px; height: 100px; background-color: blue;}
+	</style>
+
+	<body>
+		<h1>Persistent Panel Examples</h1>
+		<div id="panel">
+			This here is a panel
+		</div>
+		<span id="toggler">
+			Toggler!
+		</span>
+	</body>
+</html>
