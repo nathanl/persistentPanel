@@ -5,22 +5,37 @@
 	<script type="text/javascript" src="jquery.cookie.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#panel').persistentPanel({
-				openFunction: function() {panel.fadeIn(500);}
-			});
+
+      // Simplest case
+			$('#panel').persistentPanel();
+
+      // Some options
+			$('#panel2').persistentPanel({
+        openFunction: function() {panel.fadeIn(500);},
+        toggler: '#toggler2'
+			}).css('background-color','red');
 		});
 	</script>
 	<style type="text/css">
-		div#panel {width: 100px; height: 100px; background-color: blue;}
+		div.panel {width: 100px; height: 100px; background-color: blue;}
 	</style>
 
 	<body>
 		<h1>Persistent Panel Examples</h1>
-		<div id="panel">
+
+		<div class="panel" id="panel">
 			This here is a panel
 		</div>
 		<span id="toggler">
 			Toggler!
 		</span>
+
+		<div class="panel" id="panel2">
+			This here is a panel
+		</div>
+		<span id="toggler2">
+			Toggler!
+		</span>
+
 	</body>
 </html>
