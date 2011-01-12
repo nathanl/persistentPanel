@@ -7,12 +7,15 @@
 		$(document).ready(function() {
 
       // Simplest case
-			$('#panel').persistentPanel();
+      $('#panel').persistentPanel();
 
       // Some options
 			$('#panel2').persistentPanel({
-        openFunction: function() {panel.fadeIn(500);},
-        toggler: '#toggler2'
+        openFunction: function() {$(this).fadeIn(500);},
+        toggler: '#toggler2',
+        speed: 1000,
+        togglerContentsOpen: 'open!',
+        togglerContentsClosed: 'closed!'
 			}).css('background-color','red');
 		});
 	</script>

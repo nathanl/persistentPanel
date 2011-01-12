@@ -11,7 +11,7 @@
 * */
 (function( $ ) {
 	$.fn.persistentPanel = function(userOptions) {
-		panel = this;
+		var panel = $(this);
 		// -- Define default options and override with user-specified --
 		//
 		// Short name for internal use & expose for external modification
@@ -21,9 +21,10 @@
 			toggler: '#toggler',
 			togglerClassOpen: 'open',
 			togglerClassClosed: 'closed',
-			noTogglerContents: false,
+			changeTogglerContents: true,
 			// Functions
-			getStatusCookie: function() {return $.cookie('persistentPanelOpen');},
+			getStatusCookie: function() {return $.cookie('persistentPanelOpen') === "true" ? true : false;},
+      // TODO: Set/Get distinct cookie value for each panel on page
 			setCookieOpen:  function() {$.cookie('persistentPanelOpen', 'true', { expires: 30, path: '/'})},
 			setCookieClosed: function() {$.cookie('persistentPanelOpen', 'false', { expires: 30, path: '/'})},
 			openFunction: function(speed) {panel.show(speed); },
@@ -35,7 +36,7 @@
 		var settings = $.extend({}, defaults, userOptions);
 
 		// Some default unicode arrows to use in toggler
-		var toggleContentDefaults = $.fn.persistentPanel.toggleContentDefaults = {
+		var togglerContentsDefaults = $.fn.persistentPanel.togglerContentsDefaults = {
 			//								    ▼    						  ▲	
 			'up':			{'closed': '&#25BC', 'open': '&#25B2'},
 			//								    ▲    						  ▼	
@@ -47,33 +48,38 @@
 		};
 
 		// If user didn't specify toggle contents or disable them, use default ones
-		if (!settings['togglerContentsOpen'] && !settings['noTogglerContents']) {
-			settings.toggleContentOpen = toggleContentDefaults[settings.openDirection['open']];
-		}
-		if (!settings['togglerContentsClosed'] && !settings['noTogglerContents']) {
-			settings.toggleContentClosed = toggleContentDefaults[settings.openDirection['closed']];
+		if (settings.changeTogglerContents){
+			if (!settings['togglerContentsOpen']) {
+				settings.togglerContentsOpen = settings.togglerConentsOpen || togglerContentsDefaults[settings.openDirection]['open'];
+			}
+			if (!settings['togglerContentsClosed']) {
+				settings.togglerContentsClosed = settings.togglerContentsClosed || togglerContentsDefaults[settings.openDirection]['closed'];
+			}
 		}
 
 		var isOpen = true;
 
 		var open = function() {
 			// TODO: do this like settings.openFunction();
-			settings['openFunction'].call();
-			settings['setCookieOpen'].call();
+			settings['openFunction'].call(panel);
+			settings['setCookieOpen'].call(panel);
 			isOpen = true;
-			// TODO: Set toggler contents
+			if (settings.changeTogglerContents){
+				$(settings.toggler).html(settings.togglerContentsOpen);
+			}
 		}
 
 		var close = function() {
-			settings['closeFunction'].call();
-			settings['setCookieClosed'].call();
+			settings['closeFunction'].call(panel);
+			settings['setCookieClosed'].call(panel);
 			isOpen = false;
-			// TODO: Set toggler contents
+			if (settings.changeTogglerContents){
+				$(settings.toggler).html(settings.togglerContentsClosed);
+			}
 		};
 
-		$(settings['toggler']).click(function(){
-			cookieSetOpen = settings['getStatusCookie'].call();
-			console.log(cookieSetOpen);
+		$(settings.toggler).click(function(){
+			cookieSetOpen = settings['getStatusCookie'].call(panel);
 			if (isOpen) {
 				close();
 			} else {
@@ -81,9 +87,7 @@
 			}
 		});
 
-		// Intialize open/closed state on page load
-		// TODO: FIX THIS!!
-		cookieSetOpen = settings['getStatusCookie'].call();
+		var cookieSetOpen = settings['getStatusCookie'].call(panel);
 		if (!cookieSetOpen) {
 			close();
 		}
