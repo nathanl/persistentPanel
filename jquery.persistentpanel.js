@@ -38,13 +38,13 @@
 		// Some default unicode arrows to use in toggler
 		var togglerContentsDefaults = $.fn.persistentPanel.togglerContentsDefaults = {
 			//								    ▼    						  ▲	
-			'up':			{'closed': '&#25BC', 'open': '&#25B2'},
+			'down':			{'closed': '&#x25BC', 'open': '&#x25B2'},
 			//								    ▲    						  ▼	
-			'down':		{'closed': '&#25B2', 'open': '&#25BC'},
+			'up':		{'closed': '&#x25B2', 'open': '&#x25BC'},
 			//								    ◀                 ▶ 
-			'left':		{'closed': '&#25C0', 'open': '&#25B6'},
+			'right':		{'closed': '&#x25C0', 'open': '&#x25B6'},
 			//								    ▶                 ◀ 
-			'right':	{'closed': '&#25B6', 'open': '&#25C0'},
+			'left':	{'closed': '&#x25B6', 'open': '&#x25C0'},
 		};
 
 		// If user didn't specify toggle contents or disable them, use default ones
