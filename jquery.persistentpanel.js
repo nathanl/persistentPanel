@@ -61,21 +61,23 @@
 
 		var open = function() {
 			// TODO: do this like settings.openFunction();
-			settings['openFunction'].call(panel);
+			settings['openFunction'].call(panel, settings.speed);
 			settings['setCookieOpen'].call(panel);
 			isOpen = true;
 			if (settings.changeTogglerContents){
 				$(settings.toggler).html(settings.togglerContentsOpen);
 			}
+      $(settings.toggler).removeClass(settings.togglerClassClosed).addClass(settings.togglerClassOpen);
 		}
 
 		var close = function() {
-			settings['closeFunction'].call(panel);
+			settings['closeFunction'].call(panel, settings.speed);
 			settings['setCookieClosed'].call(panel);
 			isOpen = false;
 			if (settings.changeTogglerContents){
 				$(settings.toggler).html(settings.togglerContentsClosed);
 			}
+      $(settings.toggler).removeClass(settings.togglerClassOpen).addClass(settings.togglerClassClosed);
 		};
 
 		$(settings.toggler).click(function(){

@@ -15,9 +15,9 @@
 
       // Some options
 			$('#panel2').persistentPanel({
-        openFunction: function() {$(this).fadeIn(500);},
+        openFunction: function(speed) {$(this).fadeIn(speed);},
         toggler: '#toggler2',
-        speed: 1000,
+        speed: 3000,
         togglerContentsOpen: 'open!',
         togglerContentsClosed: 'closed!'
 			}).css('background-color','red');
@@ -25,6 +25,8 @@
 	</script>
 	<style type="text/css">
 		div.panel {width: 100px; height: 100px; background-color: blue;}
+    span.toggler.open {border: 1px solid red;}
+    span.toggler.closed {border: 1px solid blue;}
 	</style>
 
 	<body>
@@ -33,14 +35,14 @@
 		<div class="panel" id="panel">
 			This here is a panel
 		</div>
-		<span id="toggler">
+		<span class="toggler" id="toggler">
 			Toggler!
 		</span>
 
 		<div class="panel" id="panel2">
 			This here is a panel
 		</div>
-		<span id="toggler2">
+		<span class="toggler" id="toggler2">
 			Toggler!
 		</span>
 
