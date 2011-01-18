@@ -23,10 +23,11 @@
 			togglerClassClosed: 'closed',
 			changeTogglerContents: true,
 			// Functions
-			getStatusCookie: function() {return $.cookie('persistentPanelOpen') === "true" ? true : false;},
+			getStatusCookie: function() {return $.cookie(settings.cookieName) === "open" ? true : false;},
       // TODO: Set/Get distinct cookie value for each panel on page
-			setCookieOpen:  function() {$.cookie('persistentPanelOpen', 'true', { expires: 30, path: '/'})},
-			setCookieClosed: function() {$.cookie('persistentPanelOpen', 'false', { expires: 30, path: '/'})},
+      cookieName: 'persistentPanel',
+			setCookieOpen:  function() {$.cookie(settings.cookieName, 'open', { expires: 30, path: '/'})},
+			setCookieClosed: function() {$.cookie(settings.cookieName, 'closed', { expires: 30, path: '/'})},
 			openFunction: function(speed) {panel.show(speed); },
 			closeFunction: function(speed) {panel.hide(speed);},
 			speed: 500
@@ -70,8 +71,9 @@
       $(settings.toggler).removeClass(settings.togglerClassClosed).addClass(settings.togglerClassOpen);
 		}
 
-		var close = function() {
-			settings['closeFunction'].call(panel, settings.speed);
+		var close = function(speed) {
+			settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
+			//settings['closeFunction'].call(panel, 0);
 			settings['setCookieClosed'].call(panel);
 			isOpen = false;
 			if (settings.changeTogglerContents){
@@ -89,10 +91,24 @@
 			}
 		});
 
-		var cookieSetOpen = settings['getStatusCookie'].call(panel);
-		if (!cookieSetOpen) {
-			close();
-		}
+    // TODO: Add option to decide if default state is open or closed
+    var initialize = function(){
+      // Decide if panel should initially be open or closed
+      var cookieSetOpen = settings['getStatusCookie'].call(panel);
+      if (!cookieSetOpen) {
+        close(0);
+        if (settings.changeTogglerContents){
+          $(settings.toggler).html(settings.togglerContentsClosed);
+        }
+      } else {
+        if (settings.changeTogglerContents){
+          $(settings.toggler).html(settings.togglerContentsOpen);
+        }
+      }
+    }
+
+    // Get things started
+    initialize();
 
 		// Maintain chainability
 		return this;
