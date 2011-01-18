@@ -14,8 +14,9 @@
 		var panel = $(this);
 		// -- Define default options and override with user-specified --
 		//
+    $.fn.persistentPanel.defaults = {};
 		// Short name for internal use & expose for external modification
-		var defaults = $.fn.persistentPanel.defaults = {
+		var defaults = $.fn.persistentPanel.defaults.settings = {
 			changeTogglerContents: true
       ,cookieName: 'persistentPanel'
       ,defaultStatus: 'closed'
@@ -39,7 +40,7 @@
 		var settings = $.extend({}, defaults, userOptions);
 
 		// Some default unicode arrows to use in toggler
-		var togglerContentsDefaults = $.fn.persistentPanel.togglerContentsDefaults = {
+		var togglerContentsDefaults = $.fn.persistentPanel.defaults.togglerContents = {
 			//								    ▼    						  ▲	
 			'down':			{'closed': '&#x25BC', 'open': '&#x25B2'}
 			//								    ▲    						  ▼	
@@ -49,6 +50,8 @@
 			//								    ▶                 ◀ 
 			,'left':	{'closed': '&#x25B6', 'open': '&#x25C0'}
 		};
+
+    //var openFunctionDefaults = 
 
 		// If user didn't specify toggle contents or disable them, use default ones
 		if (settings.changeTogglerContents){
