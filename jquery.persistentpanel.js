@@ -28,16 +28,50 @@
 			// Functions
       ,getCurrentState: function() {
         var cookieVal =  $.cookie(settings.cookieName); 
-        return cookieVal === null ? settings.defaultStatus: cookieVal;
+        return cookieVal !== null ? cookieVal : settings.defaultStatus;
       }
 			,setCookieOpen:  function() {$.cookie(settings.cookieName, 'open', { expires: 30, path: '/'})}
 			,setCookieClosed: function() {$.cookie(settings.cookieName, 'closed', { expires: 30, path: '/'})}
-			,openFunction: function(speed) {panel.show(speed);}
-			,closeFunction: function(speed) {panel.hide(speed);}
 		};
 
 		// Merging into an empty hash doesn't modify defaults
 		var settings = $.extend({}, defaults, userOptions);
+
+    // If the user didn't specify an open function, use the open direction to decide
+    if (!settings.openFunction) {
+      settings.openFunction = (function(){
+        switch (settings.openDirection) {
+        case 'up':
+          break;
+        case 'down':
+          return function(speed){panel.animate({height: 'toggle'},speed);}
+          break;
+        case 'left':
+          break;
+        case 'right':
+          return function(speed){panel.animate({width: 'toggle'},speed);}
+          break;
+        }
+      })();
+    }
+
+    // If the user didn't specify a close function, use the open direction to decide
+    if (!settings.closeFunction) {
+      settings.closeFunction = (function(){
+        switch (settings.openDirection) {
+        case 'up':
+          break;
+        case 'down':
+          return function(speed){panel.animate({height: 'toggle'},speed);}
+          break;
+        case 'left':
+          break;
+        case 'right':
+          return function(speed){panel.animate({width: 'toggle'},speed);}
+          break;
+        }
+      })();
+    }
 
 		// Some default unicode arrows to use in toggler
 		var togglerContentsDefaults = $.fn.persistentPanel.defaults.togglerContents = {
@@ -51,8 +85,6 @@
 			,'left':	{'closed': '&#x25B6', 'open': '&#x25C0'}
 		};
 
-    //var openFunctionDefaults = 
-
 		// If user didn't specify toggle contents or disable them, use default ones
 		if (settings.changeTogglerContents){
 			if (!settings['togglerContentsOpen']) {
@@ -63,6 +95,8 @@
 			}
 		}
 
+    // Internal open and close functions - call the user's function (if any),
+    // set cookie, change toggler contents (if applicable) and set toggler class
 		var open = function(speed) {
       settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
       settings['setCookieOpen'].call(panel);
@@ -71,7 +105,6 @@
 			}
       $(settings.toggler).removeClass(settings.togglerClassClosed).addClass(settings.togglerClassOpen);
 		}
-
 		var close = function(speed) {
 			settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
 			settings['setCookieClosed'].call(panel);
@@ -81,21 +114,7 @@
       $(settings.toggler).removeClass(settings.togglerClassOpen).addClass(settings.togglerClassClosed);
 		};
 
-		$(settings.toggler).click(function(){
-      switch(settings.getCurrentState.call()) {
-      case 'open':
-        close();
-        break;
-      case 'closed':
-        open();
-        break;
-      default:
-        console.log('no state!');
-        break;
-      }
-		});
 
-    // TODO: Add option to decide if default state is open or closed
     var initialize = function(){
       // Decide if panel should initially be open or closed
       switch(settings.getCurrentState.call()){
@@ -119,6 +138,21 @@
 
     // Get things started
     initialize();
+
+    // Add click event listener
+		$(settings.toggler).click(function(){
+      switch(settings.getCurrentState.call()) {
+      case 'open':
+        close();
+        break;
+      case 'closed':
+        open();
+        break;
+      default:
+        console.log('no state!');
+        break;
+      }
+		});
 
 		// Maintain chainability
 		return this;
