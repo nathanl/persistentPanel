@@ -16,21 +16,19 @@
 		//
 		// Short name for internal use & expose for external modification
 		var defaults = $.fn.persistentPanel.defaults = {
-			openDirection: 'down',
-			// Find toggler element inside self
-			toggler: '#toggler',
-			togglerClassOpen: 'open',
-			togglerClassClosed: 'closed',
-			changeTogglerContents: true,
+			changeTogglerContents: true
+      ,cookieName: 'persistentPanel'
+			,openDirection: 'down'
+			,speed: 500
+			,toggler: '#toggler'
+			,togglerClassClosed: 'closed'
+			,togglerClassOpen: 'open'
 			// Functions
-			getStatusCookie: function() {return $.cookie(settings.cookieName) === "open" ? true : false;},
-      // TODO: Set/Get distinct cookie value for each panel on page
-      cookieName: 'persistentPanel',
-			setCookieOpen:  function() {$.cookie(settings.cookieName, 'open', { expires: 30, path: '/'})},
-			setCookieClosed: function() {$.cookie(settings.cookieName, 'closed', { expires: 30, path: '/'})},
-			openFunction: function(speed) {panel.show(speed); },
-			closeFunction: function(speed) {panel.hide(speed);},
-			speed: 500
+			,getStatusCookie: function() {return $.cookie(settings.cookieName) === "open" ? true : false;}
+			,setCookieOpen:  function() {$.cookie(settings.cookieName, 'open', { expires: 30, path: '/'})}
+			,setCookieClosed: function() {$.cookie(settings.cookieName, 'closed', { expires: 30, path: '/'})}
+			,openFunction: function(speed) {panel.show(speed);}
+			,closeFunction: function(speed) {panel.hide(speed);}
 		};
 
 		// Merging into an empty hash doesn't modify defaults
@@ -39,13 +37,13 @@
 		// Some default unicode arrows to use in toggler
 		var togglerContentsDefaults = $.fn.persistentPanel.togglerContentsDefaults = {
 			//								    ▼    						  ▲	
-			'down':			{'closed': '&#x25BC', 'open': '&#x25B2'},
+			'down':			{'closed': '&#x25BC', 'open': '&#x25B2'}
 			//								    ▲    						  ▼	
-			'up':		{'closed': '&#x25B2', 'open': '&#x25BC'},
+			,'up':		{'closed': '&#x25B2', 'open': '&#x25BC'}
 			//								    ◀                 ▶ 
-			'right':		{'closed': '&#x25C0', 'open': '&#x25B6'},
+			,'right':		{'closed': '&#x25C0', 'open': '&#x25B6'}
 			//								    ▶                 ◀ 
-			'left':	{'closed': '&#x25B6', 'open': '&#x25C0'},
+			,'left':	{'closed': '&#x25B6', 'open': '&#x25C0'}
 		};
 
 		// If user didn't specify toggle contents or disable them, use default ones
@@ -60,10 +58,9 @@
 
 		var isOpen = true;
 
-		var open = function() {
-			// TODO: do this like settings.openFunction();
-			settings['openFunction'].call(panel, settings.speed);
-			settings['setCookieOpen'].call(panel);
+		var open = function(speed) {
+      settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
+      settings['setCookieOpen'].call(panel);
 			isOpen = true;
 			if (settings.changeTogglerContents){
 				$(settings.toggler).html(settings.togglerContentsOpen);
@@ -73,7 +70,6 @@
 
 		var close = function(speed) {
 			settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
-			//settings['closeFunction'].call(panel, 0);
 			settings['setCookieClosed'].call(panel);
 			isOpen = false;
 			if (settings.changeTogglerContents){
@@ -101,6 +97,7 @@
           $(settings.toggler).html(settings.togglerContentsClosed);
         }
       } else {
+        open(0);
         if (settings.changeTogglerContents){
           $(settings.toggler).html(settings.togglerContentsOpen);
         }
