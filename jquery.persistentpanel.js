@@ -18,13 +18,17 @@
 		var defaults = $.fn.persistentPanel.defaults = {
 			changeTogglerContents: true
       ,cookieName: 'persistentPanel'
+      ,defaultStatus: 'closed'
 			,openDirection: 'down'
 			,speed: 500
 			,toggler: '#toggler'
 			,togglerClassClosed: 'closed'
 			,togglerClassOpen: 'open'
 			// Functions
-			,getStatusCookie: function() {return $.cookie(settings.cookieName) === "open" ? true : false;}
+      ,getCurrentState: function() {
+        var cookieVal =  $.cookie(settings.cookieName); 
+        return cookieVal === null ? settings.defaultStatus: cookieVal;
+      }
 			,setCookieOpen:  function() {$.cookie(settings.cookieName, 'open', { expires: 30, path: '/'})}
 			,setCookieClosed: function() {$.cookie(settings.cookieName, 'closed', { expires: 30, path: '/'})}
 			,openFunction: function(speed) {panel.show(speed);}
@@ -56,12 +60,9 @@
 			}
 		}
 
-		var isOpen = true;
-
 		var open = function(speed) {
       settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
       settings['setCookieOpen'].call(panel);
-			isOpen = true;
 			if (settings.changeTogglerContents){
 				$(settings.toggler).html(settings.togglerContentsOpen);
 			}
@@ -71,7 +72,6 @@
 		var close = function(speed) {
 			settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
 			settings['setCookieClosed'].call(panel);
-			isOpen = false;
 			if (settings.changeTogglerContents){
 				$(settings.toggler).html(settings.togglerContentsClosed);
 			}
@@ -79,28 +79,38 @@
 		};
 
 		$(settings.toggler).click(function(){
-			cookieSetOpen = settings['getStatusCookie'].call(panel);
-			if (isOpen) {
-				close();
-			} else {
-				open();
-			}
+      switch(settings.getCurrentState.call()) {
+      case 'open':
+        close();
+        break;
+      case 'closed':
+        open();
+        break;
+      default:
+        console.log('no state!');
+        break;
+      }
 		});
 
     // TODO: Add option to decide if default state is open or closed
     var initialize = function(){
       // Decide if panel should initially be open or closed
-      var cookieSetOpen = settings['getStatusCookie'].call(panel);
-      if (!cookieSetOpen) {
-        close(0);
-        if (settings.changeTogglerContents){
-          $(settings.toggler).html(settings.togglerContentsClosed);
-        }
-      } else {
+      switch(settings.getCurrentState.call()){
+      case 'open':
         open(0);
         if (settings.changeTogglerContents){
           $(settings.toggler).html(settings.togglerContentsOpen);
         }
+        break;
+      case 'closed':
+        close(0);
+        if (settings.changeTogglerContents){
+          $(settings.toggler).html(settings.togglerContentsClosed);
+        }
+        break;
+      default:
+        console.log('no state!');
+        break;
       }
     }
 
