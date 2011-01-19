@@ -10,12 +10,15 @@
 		//
     $.fn.persistentPanel.defaults = {};
 		// Short name for internal use & expose for external modification
+    // TODO: These should be accesible for modification from the outside,
+    // without getting replaced every time the plugin is run, yet
+    // also have access to the settings object on the inside
 		var defaults = $.fn.persistentPanel.defaults.settings = {
 			changeTogglerContents: true,
       cookieName: 'persistentPanel',
       defaultStatus: 'closed',
 			openDirection: 'down',
-			speed: 50,
+			speed: 500,
 			toggler: '#toggler',
 			togglerClassClosed: 'closed',
 			togglerClassOpen: 'open',
@@ -83,9 +86,9 @@
 			//								    ▲    						  ▼	
 			'up':		{'closed': '&#x25B2', 'open': '&#x25BC'},
 			//								    ◀                 ▶ 
-			'right':		{'closed': '&#x25C0', 'open': '&#x25B6'},
+			'left':		{'closed': '&#x25C0', 'open': '&#x25B6'},
 			//								    ▶                 ◀ 
-			'left':	{'closed': '&#x25B6', 'open': '&#x25C0'}
+			'right':	{'closed': '&#x25B6', 'open': '&#x25C0'}
 		};
 
 		// If user didn't specify toggle contents or disable them, use default ones

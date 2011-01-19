@@ -1,0 +1,5 @@
+html{background: #444; color: white; font-face: arial;}
+div.panel {width: 100px; height: 100px; background-color: #225;}
+.toggler{width: 2em;}
+.toggler.open {background: none}
+.toggler.closed {background: #555;}
