@@ -1,14 +1,8 @@
 // ---------------------------------------------
-// persistentPanel sidebar
+// persistentPanel
+// A jQuery plugin by Nathan Long (sleeplessgeek)
 // ---------------------------------------------
 
-/*
-* $('#panel').persistentPanel();
-*
-* $('#panel').persistentPanel({toggler: $('.togglerThing',this)});
-*
-*
-* */
 (function( $ ) {
 	$.fn.persistentPanel = function(userOptions) {
 		var panel = $(this);
@@ -30,8 +24,7 @@
         var cookieVal =  $.cookie(settings.cookieName); 
         return cookieVal !== null ? cookieVal : settings.defaultStatus;
       },
-			setCookieOpen:  function() {$.cookie(settings.cookieName, 'open', { expires: 30, path: '/'});},
-			setCookieClosed: function() {$.cookie(settings.cookieName, 'closed', { expires: 30, path: '/'});}
+			setCookie:  function(value) {$.cookie(settings.cookieName, value, { expires: 30, path: '/'});},
 		};
 
 		// Merging into an empty hash doesn't modify defaults
@@ -109,7 +102,7 @@
     // set cookie, change toggler contents (if applicable) and set toggler class
 		var open = function(speed) {
       settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
-      settings['setCookieOpen'].call(panel);
+      settings['setCookie'].call(panel, 'open');
 			if (settings.changeTogglerContents){
 				$(settings.toggler).html(settings.togglerContentsOpen);
 			}
@@ -117,7 +110,7 @@
 		};
 		var close = function(speed) {
 			settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
-			settings['setCookieClosed'].call(panel);
+			settings['setCookie'].call(panel, 'closed');
 			if (settings.changeTogglerContents){
 				$(settings.toggler).html(settings.togglerContentsClosed);
 			}

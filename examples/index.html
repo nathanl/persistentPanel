@@ -23,10 +23,12 @@
         ,cookieName: 'varmintPatty'
 			}).css('background-color','red');
 
+      $.fn.persistentPanel.defaults.speed = 3500;
+
       $('#panel3').persistentPanel({
         openDirection: 'right', 
         toggler: '#toggler3',
-        speed: 1500
+        cookieName: 'Smithers'
       });
 		});
 	</script>
