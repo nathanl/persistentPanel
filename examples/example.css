@@ -1,5 +1,13 @@
 html{background: #444; color: white; font-face: arial;}
-div.panel {width: 100px; height: 100px; background-color: #225;}
+div.panel {
+  width: 100px; 
+  height: 150px; 
+  padding: 10px;
+  background-color: #225; 
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+}
 .toggler{width: 2em;}
 .toggler.open {background: none}
 .toggler.closed {background: #555;}
