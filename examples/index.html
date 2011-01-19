@@ -17,17 +17,23 @@
 			$('#panel2').persistentPanel({
         openFunction: function(speed) {$(this).fadeIn(speed);}
         ,toggler: '#toggler2'
-        ,speed: 3000
+        ,speed: 1000
         ,togglerContentsOpen:  '&#x2191'
         ,togglerContentsClosed:  '&#x2193'
         ,cookieName: 'varmintPatty'
 			}).css('background-color','red');
+
+      $('#panel3').persistentPanel({
+        openDirection: 'right', 
+        toggler: '#toggler3',
+        speed: 1500
+      });
 		});
 	</script>
 	<style type="text/css">
 		div.panel {width: 100px; height: 100px; background-color: blue;}
-    span.toggler.open {border: 1px solid red;}
-    span.toggler.closed {border: 1px solid blue;}
+    .toggler.open {border: 1px solid red;}
+    .toggler.closed {border: 1px solid blue;}
 	</style>
 
 	<body>
@@ -36,12 +42,16 @@
 		<div class="panel" id="panel">
 			This here is a panel
 		</div>
-		<span class="toggler" id="toggler"></span>
+		<div class="toggler" id="toggler"></div>
 
 		<div class="panel" id="panel2">
 			This here is a panel
 		</div>
-		<span class="toggler" id="toggler2"></span>
+		<div class="toggler" id="toggler2"></div>
 
+		<div class="panel" id="panel3">
+			This here is a panel
+		</div>
+		<div class="toggler" id="toggler3"></div>
 	</body>
 </html>
