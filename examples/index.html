@@ -4,52 +4,56 @@
     <title>Persistent Panel Examples</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="example.css" />
-  </head>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-	<script type="text/javascript" src="../jquery.persistentpanel.js"></script>
-	<script type="text/javascript" src="../jquery.cookie.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../jquery.persistentpanel.js"></script>
+    <script type="text/javascript" src="../jquery.cookie.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
 
-      // Simplest case
-      $('#panel').persistentPanel();
+        // Simplest case
+        $('#panel').persistentPanel();
 
-      // Some options
-			$('#panel2').persistentPanel({
-        openFunction: function(speed) {$(this).fadeIn(speed);}
-        ,toggler: '#panelToggler2'
-        ,speed: 1000
-        ,togglerContentsOpen:  '&#x2191'
-        ,togglerContentsClosed:  '&#x2193'
-        ,cookieName: 'panelicous'
-			}).css('background-color','red');
+        // Some options
+        $('#panel2').persistentPanel({
+          openFunction: function(speed) {$(this).fadeIn(speed);}
+          ,toggler: '#panelToggler2'
+          ,speed: 1000
+          ,togglerContentsOpen:  '&#x2191'
+          ,togglerContentsClosed:  '&#x2193'
+          ,cookieName: 'panelicous'
+        }).css('background-color','red');
 
-      $.fn.persistentPanel.defaults.speed = 3500;
+        $.fn.persistentPanel.defaults.speed = 3500;
 
-      $('#panel3').persistentPanel({
-        openDirection: 'right', 
-        toggler: '#panelToggler3',
-        cookieName: 'paneltacular'
+        $('#panel3').persistentPanel({
+          openDirection: 'right', 
+          toggler: '#panelToggler3',
+          cookieName: 'paneltacular'
+        });
       });
-		});
-	</script>
+    </script>
+  </head>
 
-	<body>
-		<h1>Persistent Panel Examples</h1>
+  <body>
 
-		<div class="panel" id="panel">
-			This here is a panel
-		</div>
-		<div class="panelToggler" id="panelToggler"></div>
+    <h1>Persistent Panel Examples</h1>
 
-		<div class="panel" id="panel2">
-			This here is a panel
-		</div>
-		<div class="panelToggler" id="panelToggler2"></div>
+    <div class="panel" id="panel">
+      This here is a panel
+    </div>
+    <div class="panelToggler" id="panelToggler"></div>
 
-		<div class="panel" id="panel3">
-			This here is a panel
-		</div>
-		<div class="panelToggler" id="panelToggler3"></div>
-	</body>
+    <div class="panel" id="panel2">
+      This here is a panel
+    </div>
+    <div class="panelToggler" id="panelToggler2"></div>
+
+    <div>
+      <div class="panel" id="panel3">
+        This here is a panel
+      </div>
+      <div class="panelToggler" id="panelToggler3"></div>
+    </div>
+
+  </body>
 </html>
