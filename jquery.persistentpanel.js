@@ -16,7 +16,7 @@
     var defaults = $.fn.persistentPanel.defaults.settings = {
       changeTogglerContents: true,
       cookieName: 'persistentPanel',
-      defaultStatus: 'closed',
+      defaultStatus: 'open',
       openDirection: 'down',
       speed: 500,
       toggler: '#toggler',
@@ -26,82 +26,66 @@
       getCurrentState: function() {
         var cookieVal =  $.cookie(settings.cookieName); 
         return cookieVal !== null ? cookieVal : settings.defaultStatus;
+
       },
       setCookie:  function(value) {$.cookie(settings.cookieName, value, { expires: 30, path: '/'});},
     };
 
-    // Merging into an empty hash doesn't modify defaults
+    // Decide settings - Phase I
+    // User settings overrule defaults, but merge both into an empty 
+    // hash so that original defaults hash isn't modified
     var settings = $.extend({}, defaults, userOptions);
 
-    // If the user didn't specify a close function, use the open direction to decide
-    if (!settings.closeFunction) {
-      settings.closeFunction = (function(){
-        switch (settings.openDirection) {
+    // Decide settings - Phase II. 
+    // Settings that depend on another setting: the specified open direction
+    // (If any of these already have values, we leave them alone)
+    switch (settings.openDirection) {
+
         case 'up':
+          // Closed
+          settings.closeFunction = settings.closeFunction || functs.verticalClose;
+          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25B2'; // ▲
+
+          // Open
+          settings.openFunction = settings.openFunction || functs.verticalOpen;
+          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25BC'; // ▼
           break;
+
         case 'down':
-          return function(speed){
-            panel.slideUp(speed);
-          };
+          // Closed
+          settings.closeFunction = settings.closeFunction || functs.verticalClose;
+          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25BC'; // ▼
+
+          // Open
+          settings.openFunction = settings.openFunction || functs.verticalOpen;
+          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25B2'; // ▲
+          break;
+
         case 'left':
+          // Closed
+          settings.closeFunction = settings.closeFunction || functs.horizontalClose;
+          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25C0'; // ◀
+
+          // Open
+          settings.openFunction = settings.openFunction || functs.horizontalOpen;
+          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25B6'; // ▶
           break;
+
         case 'right':
-          return function(speed){
-            // Stash original width and display values before hiding
-            panel.data('width',panel.width()); 
-            panel.data('display',panel.css('display'));
-            panel.animate({width: 0, opacity: 0},speed,function(){$(this).css('display','none');});
-          };
-        }
-      }());
+          // Closed
+          settings.closeFunction = settings.closeFunction || functs.horizontalClose;
+          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25B6'; // ▶
+
+          // Open
+          settings.openFunction = settings.openFunction || functs.horizontalOpen;
+          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25C0'; // ◀
+          break;
+
+        default:
+          throw 'no open direction';
     }
 
-    // If the user didn't specify an open function, use the open direction to decide
-    if (!settings.openFunction) {
-      settings.openFunction = (function(){
-        switch (settings.openDirection) {
-        case 'up':
-          break;
-        case 'down':
-          return function(speed){
-            panel.slideDown(speed);
-          };
-          break;
-        case 'left':
-          break;
-        case 'right':
-          return function(speed){
-            // Restore previous width and display values
-            panel.css('display',panel.data('display'));
-            panel.animate({width: panel.data('width'), opacity: 1},speed);
-          };
-        }
-      }());
-    }
-
-    var togglerContentsDefaults = $.fn.persistentPanel.defaults.togglerContents = {
-      // Some default unicode arrows to use in toggler
-      //                      ▼                  ▲
-      'down': {'closed': '&#x25BC', 'open': '&#x25B2'},
-      //                  ▲                  ▼
-      'up': {'closed': '&#x25B2', 'open': '&#x25BC'},
-      //                    ◀                  ▶
-      'left': {'closed': '&#x25C0', 'open': '&#x25B6'},
-      //                    ▶                  ◀
-      'right': {'closed': '&#x25B6', 'open': '&#x25C0'}
-    };
-
-    // If user didn't specify toggle contents or disable them, use default ones
-    if (settings.changeTogglerContents){
-      if (!settings['togglerContentsOpen']) {
-        settings.togglerContentsOpen = togglerContentsDefaults[settings.openDirection]['open'];
-      }
-      if (!settings['togglerContentsClosed']) {
-        settings.togglerContentsClosed = togglerContentsDefaults[settings.openDirection]['closed'];
-      }
-    }
-
-    // Internal open and close functions - call the user's function (if any),
+    // Internal open and close functions - call the animation function,
     // set cookie, change toggler contents (if applicable) and set toggler class
     var open = function(speed) {
       settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
@@ -120,7 +104,6 @@
       $(settings.toggler).removeClass(settings.togglerClassOpen).addClass(settings.togglerClassClosed);
     };
 
-
     var initialize = function(){
       // Decide if panel should initially be open or closed
       switch(settings.getCurrentState.call()){
@@ -137,7 +120,7 @@
         }
         break;
       default:
-        console.log('no state!');
+        throw "default status must be open or closed";
         break;
       }
     };
@@ -155,7 +138,7 @@
         open();
         break;
       default:
-        console.log('no state!');
+        throw "default status must be open or closed";
         break;
       }
     });
@@ -163,4 +146,28 @@
     // Maintain chainability
     return this;
   };
+  
+  var functs = {
+   horizontalClose: function(speed){
+      // Stash original width and display values before hiding
+      $(this).data('width',$(this).width()); 
+      $(this).data('display',$(this).css('display'));
+      $(this).animate({width: 0, opacity: 0},speed,function(){$(this).css('display','none');});
+    },
+
+    horizontalOpen: function(speed){
+      // Restore previous width and display values
+      $(this).css('display',$(this).data('display'));
+      $(this).animate({width: $(this).data('width'), opacity: 1},speed);
+    }, 
+
+    verticalClose: function(speed){
+      $(this).slideUp(speed);
+    },
+
+    verticalOpen: function(speed){
+      $(this).slideDown(speed);
+    }
+  };
+
 })( jQuery );
