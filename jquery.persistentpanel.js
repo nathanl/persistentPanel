@@ -6,7 +6,7 @@
 (function( $ ) {
   $.fn.persistentPanel = function(userOptions) {
     var panel = $(this);
-    // -- Define default options and override with user-specified --
+    // Define default options and override with user-specified
     //
     $.fn.persistentPanel.defaults = {};
     // Short name for internal use & expose for external modification
@@ -19,7 +19,7 @@
       defaultStatus: 'open',
       openDirection: 'down',
       speed: 500,
-      toggler: '#toggler',
+      toggler: '#panelToggler',
       togglerClassClosed: 'closed',
       togglerClassOpen: 'open',
       // Functions
@@ -44,7 +44,13 @@
     var settings = $.extend({}, defaults, userOptions);
 
     // Decide settings - Phase II. 
-    // Settings that depend on another setting: the specified open direction
+    //
+    // First, ensure that we have a valid openDirection
+    var o = settings.openDirection;
+    if (!(o === 'up' || o === 'down' || o === 'left' || o === 'right')){
+      settings.openDirection = 'down';
+    }
+    // Settings that depend on the open direction setting for their defaults
     // (If any of these already have values, we leave them alone)
     switch (settings.openDirection) {
 
@@ -87,9 +93,6 @@
           settings.openFunction = settings.openFunction || functs.horizontalOpen;
           settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25C0'; // ◀
           break;
-
-        default:
-          throw 'no open direction';
     }
 
     // Internal open and close functions - call the animation function,
@@ -148,6 +151,7 @@
     return this;
   };
   
+  // Functions to be defined only once, even if plugin is called multiple times
   var functs = {
    horizontalClose: function(speed){
       // Stash original width and display values before hiding

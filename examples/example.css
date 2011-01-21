@@ -8,6 +8,6 @@ div.panel {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
 }
-.toggler{width: 2em;}
-.toggler.open {background: none}
-.toggler.closed {background: #555;}
+.panelToggler{width: 2em;}
+.panelToggler.open {background: none}
+.panelToggler.closed {background: #555;}

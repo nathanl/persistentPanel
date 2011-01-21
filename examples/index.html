@@ -17,7 +17,7 @@
       // Some options
 			$('#panel2').persistentPanel({
         openFunction: function(speed) {$(this).fadeIn(speed);}
-        ,toggler: '#toggler2'
+        ,toggler: '#panelToggler2'
         ,speed: 1000
         ,togglerContentsOpen:  '&#x2191'
         ,togglerContentsClosed:  '&#x2193'
@@ -28,7 +28,7 @@
 
       $('#panel3').persistentPanel({
         openDirection: 'right', 
-        toggler: '#toggler3',
+        toggler: '#panelToggler3',
         cookieName: 'paneltacular'
       });
 		});
@@ -40,16 +40,16 @@
 		<div class="panel" id="panel">
 			This here is a panel
 		</div>
-		<div class="toggler" id="toggler"></div>
+		<div class="panelToggler" id="panelToggler"></div>
 
 		<div class="panel" id="panel2">
 			This here is a panel
 		</div>
-		<div class="toggler" id="toggler2"></div>
+		<div class="panelToggler" id="panelToggler2"></div>
 
 		<div class="panel" id="panel3">
 			This here is a panel
 		</div>
-		<div class="toggler" id="toggler3"></div>
+		<div class="panelToggler" id="panelToggler3"></div>
 	</body>
 </html>
