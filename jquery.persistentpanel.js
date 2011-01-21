@@ -23,17 +23,19 @@
       togglerClassClosed: 'closed',
       togglerClassOpen: 'open',
       // Functions
-      getCurrentState: function() {
-        var cookieVal =  $.cookie(settings.cookieName); 
-        if (cookieVal === 'open' || cookieVal === 'closed') {
-          return cookieVal;
-        } else if (settings.defaultStatus === 'open' || settings.defaultStatus === 'closed'){
-          return settings.defaultStatus;
-        } else {
-          return 'open';
-        }
-      },
-      setCookie:  function(value) {$.cookie(settings.cookieName, value, { expires: 30, path: '/'});},
+      getCookie:  function() {return $.cookie(settings.cookieName);},
+      setCookie:  function(value) {$.cookie(settings.cookieName, value, { expires: 30, path: '/'});}
+    };
+
+    var getCurrentState = function() {
+      var cookieVal =  settings.getCookie(); 
+      if (cookieVal === 'open' || cookieVal === 'closed') {
+        return cookieVal;
+      } else if (settings.defaultStatus === 'open' || settings.defaultStatus === 'closed'){
+        return settings.defaultStatus;
+      } else {
+        return 'open';
+      }
     };
 
     // Decide settings - Phase I
@@ -111,7 +113,7 @@
 
     var initialize = function(){
       // Decide if panel should initially be open or closed
-      switch(settings.getCurrentState.call()){
+      switch(getCurrentState()){
       case 'open':
         open(0);
         if (settings.changeTogglerContents){
@@ -132,7 +134,7 @@
 
     // Add click event listener
     $(settings.toggler).click(function(){
-      switch(settings.getCurrentState.call()) {
+      switch(getCurrentState()) {
       case 'open':
         close();
         break;
