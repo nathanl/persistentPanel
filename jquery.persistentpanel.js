@@ -25,8 +25,13 @@
       // Functions
       getCurrentState: function() {
         var cookieVal =  $.cookie(settings.cookieName); 
-        return cookieVal !== null ? cookieVal : settings.defaultStatus;
-
+        if (cookieVal === 'open' || cookieVal === 'closed') {
+          return cookieVal;
+        } else if (settings.defaultStatus === 'open' || settings.defaultStatus === 'closed'){
+          return settings.defaultStatus;
+        } else {
+          return 'open';
+        }
       },
       setCookie:  function(value) {$.cookie(settings.cookieName, value, { expires: 30, path: '/'});},
     };
@@ -119,9 +124,6 @@
           $(settings.toggler).html(settings.togglerContentsClosed);
         }
         break;
-      default:
-        throw "default status must be open or closed";
-        break;
       }
     };
 
@@ -136,9 +138,6 @@
         break;
       case 'closed':
         open();
-        break;
-      default:
-        throw "default status must be open or closed";
         break;
       }
     });
