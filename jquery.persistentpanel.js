@@ -1,6 +1,7 @@
 // ---------------------------------------------
 // persistentPanel
-// A jQuery plugin by Nathan Long (sleeplessgeek)
+// A jQuery plugin by Nathan Long
+// https://github.com/sleeplessgeek/persistentPanel
 // ---------------------------------------------
 
 (function( $ ) {
@@ -8,12 +9,10 @@
     var panel = $(this);
     // Define default options and override with user-specified
     //
-    // Short name for internal use & expose for external modification
-    // TODO: These should be accesible for modification from the outside,
-    // without getting replaced every time the plugin is run, yet
-    // also have access to the settings object on the inside
+    // Short name for internal use - exposed below for external modification
     var defaults = $.fn.persistentPanel.defaults;
 
+    // Always returns 'open' or 'closed'
     var getCurrentState = function() {
       var cookieVal =  settings.getCookie(settings.cookieName); 
       if (cookieVal === 'open' || cookieVal === 'closed') {
@@ -37,6 +36,7 @@
     if (!(o === 'up' || o === 'down' || o === 'left' || o === 'right')){
       settings.openDirection = 'down';
     }
+
     // Settings that depend on the open direction setting for their defaults
     // (If any of these already have values, we leave them alone)
     var toggles = defaults.toggles;
@@ -83,7 +83,7 @@
           break;
     }
 
-    // Internal open and close functions - call the animation function,
+    // Internal open and close functions - call the toggle function,
     // set cookie, change toggler contents (if applicable) and set toggler class
     var open = function(speed) {
       settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
@@ -123,8 +123,8 @@
     // Get things started
     initialize();
 
-    // Add click event listener
-    $(settings.toggler).click(function(){
+    // Add namespaced click event listener
+    $(settings.toggler).bind('click.persistentPanel',function(){
       switch(getCurrentState()) {
       case 'open':
         close();
