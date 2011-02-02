@@ -13,7 +13,7 @@
         // Simplest case
         $('#panel').persistentPanel();
 
-        // Some options
+        // With some options
         $('#panel2').persistentPanel({
           openFunction: function(speed) {$(this).fadeIn(speed);}
           ,toggler: '#panelToggler2'
@@ -21,6 +21,8 @@
           ,togglerContentsOpen:  '&#x2191'
           ,togglerContentsClosed:  '&#x2193'
           ,cookieName: 'panelicous'
+
+          // You can still chain other methods
         }).css('background-color','red');
 
         // Change a default setting - affects rest of instances on the page
@@ -40,19 +42,63 @@
 
     <h1>Persistent Panel Examples</h1>
 
+    <div class="code">
+      // Simplest case:
+      $('#panel').persistentPanel();
+    </div>
+
     <div class="panel" id="panel">
-      This here is a panel
+      <h2>Woo, Panel!</h2>
+      <p>Adjectives that describe this panel include:</p>
+      <ul>
+        <li>Awesome</li>
+        <li>Sweet</li>
+        <li>Rad</li>
+        <li>T... tublar?</li>
+      </ul>
     </div>
     <div class="panelToggler" id="panelToggler"></div>
 
+    <hr>
+
+    <div class="code">
+      // With some options
+      $('#panel2').persistentPanel({
+      openFunction: function(speed) {$(this).fadeIn(speed);}
+      ,toggler: '#panelToggler2'
+      ,speed: 1000
+      ,togglerContentsOpen:  '&#x2191'
+      ,togglerContentsClosed:  '&#x2193'
+      ,cookieName: 'panelicous'
+
+      // You can still chain other methods
+      }).css('background-color','red');
+    </div>
+
     <div class="panel" id="panel2">
-      This here is a panel
+      <h2>Clearly, a panel</h2>
+      <p>Not all items on a page can be panels. But some of them can.</p>
+      <p>They are the luckiest DOM elements of all.</p>
     </div>
     <div class="panelToggler" id="panelToggler2"></div>
 
+    <hr>
+    
+    <div class="code">
+      // Change a default setting - affects rest of instances on the page
+      $.fn.persistentPanel.defaults.speed = 5000;
+
+      $('#panel3').persistentPanel({
+      openDirection: 'right', 
+      toggler: '#panelToggler3',
+      cookieName: 'paneltacular'
+      });
+    </div>
+
     <div>
       <div class="panel" id="panel3">
-        This here is a panel
+        <h2>Not a panel</h2>
+        <p>Don't you believe it. I mean, unless you like facts.</p>
       </div>
       <div class="panelToggler" id="panelToggler3"></div>
     </div>

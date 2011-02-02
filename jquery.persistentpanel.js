@@ -1,5 +1,5 @@
 // ---------------------------------------------
-// persistentPanel
+// persistentPanel v1.0
 // A jQuery plugin by Nathan Long
 // https://github.com/sleeplessgeek/persistentPanel
 // ---------------------------------------------
