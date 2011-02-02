@@ -5,8 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" type="text/css" href="example.css" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-    <script type="text/javascript" src="../jquery.persistentpanel.js"></script>
     <script type="text/javascript" src="../jquery.cookie.js"></script>
+    <script type="text/javascript" src="../jquery.persistentpanel.js"></script>
     <script type="text/javascript">
       $(document).ready(function() {
 
@@ -23,7 +23,8 @@
           ,cookieName: 'panelicous'
         }).css('background-color','red');
 
-        $.fn.persistentPanel.defaults.speed = 3500;
+        // Change a default setting - affects rest of instances on the page
+        $.fn.persistentPanel.defaults.speed = 5000;
 
         $('#panel3').persistentPanel({
           openDirection: 'right', 

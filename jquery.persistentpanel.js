@@ -8,27 +8,14 @@
     var panel = $(this);
     // Define default options and override with user-specified
     //
-    $.fn.persistentPanel.defaults = {};
     // Short name for internal use & expose for external modification
     // TODO: These should be accesible for modification from the outside,
     // without getting replaced every time the plugin is run, yet
     // also have access to the settings object on the inside
-    var defaults = $.fn.persistentPanel.defaults.settings = {
-      changeTogglerContents: true,
-      cookieName: 'persistentPanel',
-      defaultStatus: 'open',
-      openDirection: 'down',
-      speed: 500,
-      toggler: '#panelToggler',
-      togglerClassClosed: 'closed',
-      togglerClassOpen: 'open',
-      // Functions
-      getCookie:  function() {return $.cookie(settings.cookieName);},
-      setCookie:  function(value) {$.cookie(settings.cookieName, value, { expires: 30, path: '/'});}
-    };
+    var defaults = $.fn.persistentPanel.defaults;
 
     var getCurrentState = function() {
-      var cookieVal =  settings.getCookie(); 
+      var cookieVal =  settings.getCookie(settings.cookieName); 
       if (cookieVal === 'open' || cookieVal === 'closed') {
         return cookieVal;
       } else if (settings.defaultStatus === 'open' || settings.defaultStatus === 'closed'){
@@ -52,45 +39,46 @@
     }
     // Settings that depend on the open direction setting for their defaults
     // (If any of these already have values, we leave them alone)
+    var toggles = defaults.toggles;
     switch (settings.openDirection) {
 
         case 'up':
           // Closed
-          settings.closeFunction = settings.closeFunction || functs.verticalClose;
+          settings.closeFunction = settings.closeFunction || toggles.verticalClose;
           settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25B2'; // ▲
 
           // Open
-          settings.openFunction = settings.openFunction || functs.verticalOpen;
+          settings.openFunction = settings.openFunction || toggles.verticalOpen;
           settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25BC'; // ▼
           break;
 
         case 'down':
           // Closed
-          settings.closeFunction = settings.closeFunction || functs.verticalClose;
+          settings.closeFunction = settings.closeFunction || toggles.verticalClose;
           settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25BC'; // ▼
 
           // Open
-          settings.openFunction = settings.openFunction || functs.verticalOpen;
+          settings.openFunction = settings.openFunction || toggles.verticalOpen;
           settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25B2'; // ▲
           break;
 
         case 'left':
           // Closed
-          settings.closeFunction = settings.closeFunction || functs.horizontalClose;
+          settings.closeFunction = settings.closeFunction || toggles.horizontalClose;
           settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25C0'; // ◀
 
           // Open
-          settings.openFunction = settings.openFunction || functs.horizontalOpen;
+          settings.openFunction = settings.openFunction || toggles.horizontalOpen;
           settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25B6'; // ▶
           break;
 
         case 'right':
           // Closed
-          settings.closeFunction = settings.closeFunction || functs.horizontalClose;
+          settings.closeFunction = settings.closeFunction || toggles.horizontalClose;
           settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25B6'; // ▶
 
           // Open
-          settings.openFunction = settings.openFunction || functs.horizontalOpen;
+          settings.openFunction = settings.openFunction || toggles.horizontalOpen;
           settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25C0'; // ◀
           break;
     }
@@ -99,7 +87,7 @@
     // set cookie, change toggler contents (if applicable) and set toggler class
     var open = function(speed) {
       settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
-      settings['setCookie'].call(panel, 'open');
+      settings['setCookie'].call(panel, settings.cookieName, 'open');
       if (settings.changeTogglerContents){
         $(settings.toggler).html(settings.togglerContentsOpen);
       }
@@ -107,7 +95,7 @@
     };
     var close = function(speed) {
       settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
-      settings['setCookie'].call(panel, 'closed');
+      settings['setCookie'].call(panel, settings.cookieName, 'closed');
       if (settings.changeTogglerContents){
         $(settings.toggler).html(settings.togglerContentsClosed);
       }
@@ -150,29 +138,40 @@
     // Maintain chainability
     return this;
   };
-  
-  // Functions to be defined only once, even if plugin is called multiple times
-  var functs = {
-   horizontalClose: function(speed){
-      // Stash original width and display values before hiding
-      $(this).data('width',$(this).width()); 
-      $(this).data('display',$(this).css('display'));
-      $(this).animate({width: 0, opacity: 0},speed,function(){$(this).css('display','none');});
-    },
 
-    horizontalOpen: function(speed){
-      // Restore previous width and display values
-      $(this).css('display',$(this).data('display'));
-      $(this).animate({width: $(this).data('width'), opacity: 1},speed);
-    }, 
+  $.fn.persistentPanel.defaults = {
+    changeTogglerContents: true,
+    cookieName: 'persistentPanel',
+    defaultStatus: 'open',
+    openDirection: 'down',
+    speed: 500,
+    toggler: '#panelToggler',
+    togglerClassClosed: 'closed',
+    togglerClassOpen: 'open',
+    // Functions
+    getCookie:  function(cookieName) {return $.cookie(cookieName);},
+    setCookie:  function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});},
+    toggles: {
+      horizontalClose: function(speed){
+        // Stash original width and display values before hiding
+        $(this).data('width',$(this).width()); 
+        $(this).data('display',$(this).css('display'));
+        $(this).animate({width: 0, opacity: 0},speed,function(){$(this).css('display','none');});
+      },
 
-    verticalClose: function(speed){
-      $(this).slideUp(speed);
-    },
+      horizontalOpen: function(speed){
+        // Restore previous width and display values
+        $(this).css('display',$(this).data('display'));
+        $(this).animate({width: $(this).data('width'), opacity: 1},speed);
+      }, 
 
-    verticalOpen: function(speed){
-      $(this).slideDown(speed);
+      verticalClose: function(speed){
+        $(this).slideUp(speed);
+      },
+
+      verticalOpen: function(speed){
+        $(this).slideDown(speed);
+      }
     }
   };
-
 })( jQuery );
