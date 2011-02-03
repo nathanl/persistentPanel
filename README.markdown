@@ -7,8 +7,7 @@ or closed. Allows custom animations but has sensible defaults.
 is clicked
  - Remembers last state a user left the panel in and use that on page reload
  - Easy to use with defaults - just $('#somediv').persistentPanel();
- - You can pass in custom animations, cookie names, etc etc.
- - See examples/index.html for usage examples
+ - You can pass in custom animations, cookie names, etc.
 
 ## Usage Examples
 
@@ -25,7 +24,7 @@ is clicked
     <tr>
       <td>changeTogglerContents</td>
       <td>true</td>
-      <td>true | false</td>
+      <td>true<br/>false</td>
       <td> 
         Whether to replace the contents of your specified toggler
         element with the contents of togglerContentsOpen and
@@ -51,7 +50,7 @@ is clicked
     <tr>
       <td>defaultStatus</td>
       <td>'open'</td>
-      <td>'open' | 'closed'</td>
+      <td>'open' <br/> 'closed'</td>
       <td>
         If no cookie is set, should the panel start out open or
         closed?
@@ -60,7 +59,7 @@ is clicked
     <tr>
       <td>openDirection</td>
       <td>'down'</td>
-      <td>'up' | 'down' | 'left' | 'right'</td>
+      <td>'up' <br/> 'down' <br/> 'left' <br/> 'right'</td>
       <td>
         Is used to determine default values for openFunction,
         closeFunction, togglerContentsOpen and togglerContentsClosed. If
