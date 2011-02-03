@@ -74,6 +74,7 @@
     // Internal open and close functions - call the toggle function,
     // set cookie, change toggler contents (if applicable) and set toggler class
     var open = function(speed) {
+      $.data(panel, 'persistentPanelState', 'open');
       settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
       settings['setCookie'].call(panel, settings.cookieName, 'open');
       if (settings.changeTogglerContents){
@@ -82,6 +83,7 @@
       $(settings.toggler).removeClass(settings.togglerClassClosed).addClass(settings.togglerClassOpen);
     };
     var close = function(speed) {
+      $.data(panel, 'persistentPanelState', 'closed');
       settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
       settings['setCookie'].call(panel, settings.cookieName, 'closed');
       if (settings.changeTogglerContents){
@@ -90,25 +92,9 @@
       $(settings.toggler).removeClass(settings.togglerClassOpen).addClass(settings.togglerClassClosed);
     };
 
-    // Will be a function that always returns 'open' or 'closed'
-    var getCurrentState;
-
-    // We are not going to set a cookie, so we need a closure to remember the
-    // toggle state (option set by nonPersistentPanel())
-    if (settings.doNotPersist) {
-      getCurrentState = (function(){
-        // Initial state depends on defaultState setting
-        var i = settings.defaultState == 'closed' ? 0 : 1; 
-        return function(){i++; return i % 2 == 0 ? 'open' : 'closed';};
-      })();
-    // Use cookie - normal case
-    } else {
-      getCurrentState = function() { };
-    }
-
     var initialize = function(){
+      // Decide initial state on page load, based on cookie or defaultState setting
       var initialState, cookieVal;
-
       cookieVal =  settings.getCookie(settings.cookieName); 
       if (cookieVal === 'open' || cookieVal === 'closed') {
         initialState = cookieVal;
@@ -117,6 +103,10 @@
       } else {
         initialState = 'open';
       }
+
+      // Store that state in the DOM
+      $.data(panel, 'persistentPanelState',initialState);
+
       // Decide if panel should initially be open or closed
       switch(initialState){
       case 'open':
@@ -139,7 +129,7 @@
 
     // Add namespaced click event listener
     $(settings.toggler).bind('click.persistentPanel',function(){
-      switch(getCurrentState()) {
+      switch($.data(panel, 'persistentPanelState')) {
       case 'open':
         close();
         break;
@@ -190,10 +180,7 @@
   };
   $.fn.nonPersistentPanel = function(options) {
     // Useless, but callable, cookie functions
-    options.setCookie = options.setCookie = function(){return null;}
-    
-    // The crucial option
-    options.doNotPersist = true;
+    options.setCookie = options.getCookie = function(){return null;}
 
     $(this).persistentPanel(options);
   }
