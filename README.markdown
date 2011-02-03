@@ -160,7 +160,7 @@ is clicked
     </tr>
     <tr>
       <td>getCookie</td>
-      <td>`function(cookieName) {return $.cookie(cookieName);}`</td>
+      <td><code>function(cookieName) {return $.cookie(cookieName);}</code></td>
       <td>A function to get the cookie from the cookieName option - see description</td>
       <td>
         By default, this function uses the jQuery.cookie plugin. If you
@@ -174,7 +174,7 @@ is clicked
     </tr>
     <tr>
       <td>setCookie</td>
-      <td>`function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});}`</td>
+      <td><code>function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});}</code></td>
       <td>A function to set the cookie in the cookieName option - see
         description</td>
       <td>
@@ -183,7 +183,7 @@ is clicked
         your cookie - refer to the jQuery.cookie plugin documentation in 
         the source code. It is quite well-written.<br/>
         For example, you could pass in the following:<br/>
-        `function(cookieName, value) {$.cookie(cookieName, value, { expires: 7, path: '/', domain: 'jquery.com', secure: true});}`
+        <code>function(cookieName, value) {$.cookie(cookieName, value, { expires: 7, path: '/', domain: 'jquery.com', secure: true});}</code>
         
         <br/>
         If you don't want the dependency on jQuery.cookie, pass in your own function. It should:
