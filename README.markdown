@@ -153,6 +153,7 @@ is clicked
         For example, you could pass in the following:<br/>
         function(cookieName, value) {$.cookie(cookieName, value, { expires: 7, path: '/', domain: 'jquery.com', secure: true});}
         
+        <br/>
         If you don't want the dependency on jQuery.cookie, pass in your own function. It should:
         <ul>
           <li>
