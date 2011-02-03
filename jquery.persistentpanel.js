@@ -98,8 +98,8 @@
     if (settings.doNotPersist) {
       getCurrentState = (function(){
         // Initial state depends on defaultStatus setting
-        i = settings.defaultStatus == 'open'? 0 : 1; 
-        return function(){i++; return i % 2 == 0 ? 'closed' : 'open';};
+        i = settings.defaultStatus == 'closed' ? 0 : 1; 
+        return function(){i++; return i % 2 == 0 ? 'open' : 'closed';};
       })();
     } else {
       getCurrentState = function() {
