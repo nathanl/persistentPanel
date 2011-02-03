@@ -1,20 +1,24 @@
-h1. PersistentPanel - the panel that won't quit
+# PersistentPanel - the panel that won't quit
 
 A simple jQuery plugin for creating panels that remember whether they are open
 or closed. Allows custom animations but has sensible defaults.
 
-*Creates a panel that opens and closes, vertically or horizontally, when a toggler element
+ - Creates a panel that opens and closes, vertically or horizontally, when a toggler element
 is clicked
-*Remembers last state a user left the panel in and use that on page reload
-*Easy to use with defaults - just $('#somediv').persistentPanel();
-*You can pass in custom animations, cookie names, etc etc.
-*See examples/index.html for usage examples
+ - Remembers last state a user left the panel in and use that on page reload
+ - Easy to use with defaults - just $('#somediv').persistentPanel();
+ - You can pass in custom animations, cookie names, etc etc.
+ - See examples/index.html for usage examples
 
-h2. Usage Examples
+## Usage Examples
 
 (See examples/index.html)
 
-h2. Options
+## Options
+ 
+<table>
+
+
 
 |_.Setting name |_.Default value |_.Description
 
