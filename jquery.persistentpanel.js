@@ -94,13 +94,14 @@
     var getCurrentState;
 
     // We are not going to set a cookie, so we need a closure to remember the
-    // toggle state
+    // toggle state (option set by nonPersistentPanel())
     if (settings.doNotPersist) {
       getCurrentState = (function(){
         // Initial state depends on defaultStatus setting
         i = settings.defaultStatus == 'closed' ? 0 : 1; 
         return function(){i++; return i % 2 == 0 ? 'open' : 'closed';};
       })();
+    // Use cookie - normal case
     } else {
       getCurrentState = function() {
         var cookieVal =  settings.getCookie(settings.cookieName); 
