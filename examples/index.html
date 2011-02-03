@@ -15,9 +15,9 @@
 
         // With some options
         $('#panel2').persistentPanel({
-          openFunction: function(speed) {$(this).fadeIn(speed);}
+          openFunction: function(duration) {$(this).fadeIn(duration);}
           ,toggler: '#panelToggler2'
-          ,speed: 1000
+          ,duration: 1000
           ,togglerContentsOpen:  '&#x2191'
           ,togglerContentsClosed:  '&#x2193'
           ,cookieName: 'panelicous'
@@ -26,7 +26,7 @@
         }).css('background-color','red');
 
         // Change a default setting - affects rest of instances on the page
-        $.fn.persistentPanel.defaults.speed = 250;
+        $.fn.persistentPanel.defaults.duration = 250;
 
         $('#panel3').persistentPanel({
           openDirection: 'right', 
@@ -78,9 +78,9 @@
     <div class="code">
       // With some options
       $('#panel2').persistentPanel({
-        openFunction: function(speed) {$(this).fadeIn(speed);}
+        openFunction: function(duration) {$(this).fadeIn(duration);}
         ,toggler: '#panelToggler2'
-        ,speed: 1000
+        ,duration: 1000
         ,togglerContentsOpen:  '&#x2191'
         ,togglerContentsClosed:  '&#x2193'
         ,cookieName: 'panelicous'
@@ -100,7 +100,7 @@
     
     <div class="code">
       // Change a default setting - affects rest of instances on the page
-      $.fn.persistentPanel.defaults.speed = 50;
+      $.fn.persistentPanel.defaults.duration = 50;
 
       $('#panel3').persistentPanel({
         openDirection: 'right', 

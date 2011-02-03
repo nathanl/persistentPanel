@@ -35,6 +35,22 @@ is clicked
       </td>
     </tr>
     <tr>
+      <td>closeFunction</td>
+      <td>(depends on openDirection)</td>
+      <td>Any jquery animation for hiding</td>
+      <td>
+       If you don't specify this, a default will be chosen based on the
+       openDirection (which also has its own default). If you do specify a
+       closeFunction, it should accept a duration parameter. This is for two
+       reasons:
+       <ul>
+         <li>Your duration setting will be passed to this function</li>
+         <li>On page load, if the panel should be closed, this function will be
+         called with a duration of 0 (meaning "close instantly").</li>
+       </ul> 
+      </td>
+    </tr>
+    <tr>
       <td>cookieName</td>
       <td>'persistentPanel'</td>
       <td>Any string</td>
@@ -69,7 +85,23 @@ is clicked
       </td>
     </tr>
     <tr>
-      <td>speed</td>
+      <td>openFunction</td>
+      <td>(depends on openDirection)</td>
+      <td>Any jquery animation for showing</td>
+      <td>
+       If you don't specify this, a default will be chosen based on the
+       openDirection (which also has its own default). If you do specify an
+       openFunction, it should accept a duration parameter. This is for two
+       reasons:
+       <ul>
+         <li>Your duration setting will be passed to this function</li>
+         <li>On page load, if the panel should be open, this function will be
+         called with a duration of 0 (meaning "open instantly").</li>
+       </ul> 
+      </td>
+    </tr>
+    <tr>
+      <td>duration</td>
       <td>500</td>
       <td>Any number accepted by jQuery's animate functions</td>
       <td>

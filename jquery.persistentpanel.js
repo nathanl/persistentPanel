@@ -73,18 +73,18 @@
 
     // Internal open and close functions - call the toggle function,
     // set cookie, change toggler contents (if applicable) and set toggler class
-    var open = function(speed) {
+    var open = function(duration) {
       $.data(panel, 'persistentPanelState', 'open');
-      settings['openFunction'].call(panel, speed === undefined ? settings.speed : speed);
+      settings['openFunction'].call(panel, duration === undefined ? settings.duration : duration);
       settings['setCookie'].call(panel, settings.cookieName, 'open');
       if (settings.changeTogglerContents){
         $(settings.toggler).html(settings.togglerContentsOpen);
       }
       $(settings.toggler).removeClass(settings.togglerClassClosed).addClass(settings.togglerClassOpen);
     };
-    var close = function(speed) {
+    var close = function(duration) {
       $.data(panel, 'persistentPanelState', 'closed');
-      settings['closeFunction'].call(panel, speed === undefined ? settings.speed : speed);
+      settings['closeFunction'].call(panel, duration === undefined ? settings.duration : duration);
       settings['setCookie'].call(panel, settings.cookieName, 'closed');
       if (settings.changeTogglerContents){
         $(settings.toggler).html(settings.togglerContentsClosed);
@@ -148,7 +148,7 @@
     cookieName: 'persistentPanel',
     defaultState: 'open',
     openDirection: 'down',
-    speed: 500,
+    duration: 500,
     toggler: '#panelToggler',
     togglerClassClosed: 'closed',
     togglerClassOpen: 'open',
@@ -156,25 +156,25 @@
     getCookie:  function(cookieName) {return $.cookie(cookieName);},
     setCookie:  function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});},
     toggles: {
-      horizontalClose: function(speed){
+      horizontalClose: function(duration){
         // Stash original width and display values before hiding
         $(this).data('width',$(this).width()); 
         $(this).data('display',$(this).css('display'));
-        $(this).animate({width: 0, opacity: 0},speed,function(){$(this).css('display','none');});
+        $(this).animate({width: 0, opacity: 0},duration,function(){$(this).css('display','none');});
       },
 
-      horizontalOpen: function(speed){
+      horizontalOpen: function(duration){
         // Restore previous width and display values
         $(this).css('display',$(this).data('display'));
-        $(this).animate({width: $(this).data('width'), opacity: 1},speed);
+        $(this).animate({width: $(this).data('width'), opacity: 1},duration);
       }, 
 
-      verticalClose: function(speed){
-        $(this).slideUp(speed);
+      verticalClose: function(duration){
+        $(this).slideUp(duration);
       },
 
-      verticalOpen: function(speed){
-        $(this).slideDown(speed);
+      verticalOpen: function(duration){
+        $(this).slideDown(duration);
       }
     }
   };
