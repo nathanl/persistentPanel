@@ -103,21 +103,22 @@
       })();
     // Use cookie - normal case
     } else {
-      getCurrentState = function() {
-        var cookieVal =  settings.getCookie(settings.cookieName); 
-        if (cookieVal === 'open' || cookieVal === 'closed') {
-          return cookieVal;
-        } else if (settings.defaultState === 'open' || settings.defaultState === 'closed'){
-          return settings.defaultState;
-        } else {
-          return 'open';
-        }
-      };
+      getCurrentState = function() { };
     }
 
     var initialize = function(){
+      var initialState, cookieVal;
+
+      cookieVal =  settings.getCookie(settings.cookieName); 
+      if (cookieVal === 'open' || cookieVal === 'closed') {
+        initialState = cookieVal;
+      } else if (settings.defaultState === 'open' || settings.defaultState === 'closed'){
+        initialState = settings.defaultState;
+      } else {
+        initialState = 'open';
+      }
       // Decide if panel should initially be open or closed
-      switch(getCurrentState()){
+      switch(initialState){
       case 'open':
         open(0);
         if (settings.changeTogglerContents){
