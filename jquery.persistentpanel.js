@@ -98,7 +98,7 @@
     if (settings.doNotPersist) {
       getCurrentState = (function(){
         // Initial state depends on defaultStatus setting
-        i = settings.defaultStatus == 'closed' ? 0 : 1; 
+        var i = settings.defaultStatus == 'closed' ? 0 : 1; 
         return function(){i++; return i % 2 == 0 ? 'open' : 'closed';};
       })();
     // Use cookie - normal case
