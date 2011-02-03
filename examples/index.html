@@ -15,12 +15,12 @@
 
         // With some options
         $('#panel2').persistentPanel({
-          openFunction: function(duration) {$(this).fadeIn(duration);}
-          ,toggler: '#panelToggler2'
-          ,duration: 1000
-          ,togglerContentsOpen:  '&#x2191'
-          ,togglerContentsClosed:  '&#x2193'
-          ,cookieName: 'panelicous'
+          openFunction: function(duration) {$(this).fadeIn(duration);},
+          toggler: '#panelToggler2',
+          duration: 1000,
+          togglerContentsOpen:  '&#x2191',
+          togglerContentsClosed:  '&#x2193',
+          cookieName: 'panelicous'
 
           // You can still chain other methods
         }).css('background-color','red');
@@ -78,14 +78,14 @@
     <div class="code">
       // With some options
       $('#panel2').persistentPanel({
-        openFunction: function(duration) {$(this).fadeIn(duration);}
-        ,toggler: '#panelToggler2'
-        ,duration: 1000
-        ,togglerContentsOpen:  '&#x2191'
-        ,togglerContentsClosed:  '&#x2193'
-        ,cookieName: 'panelicous'
+        openFunction: function(duration) {$(this).fadeIn(duration);},
+        toggler: '#panelToggler2',
+        duration: 1000,
+        togglerContentsOpen:  '&amp;&#35;x2191',
+        togglerContentsClosed:  '&amp;&#35;x2193',
+        cookieName: 'panelicous'
 
-      // You can still chain other methods
+        // You can still chain other methods
       }).css('background-color','red');
     </div>
 
