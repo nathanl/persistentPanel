@@ -48,7 +48,7 @@ is clicked
       </td>
     </tr>
     <tr>
-      <td>defaultStatus</td>
+      <td>defaultState</td>
       <td>'open'</td>
       <td>'open' <br/> 'closed'</td>
       <td>

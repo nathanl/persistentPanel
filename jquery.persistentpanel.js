@@ -97,8 +97,8 @@
     // toggle state (option set by nonPersistentPanel())
     if (settings.doNotPersist) {
       getCurrentState = (function(){
-        // Initial state depends on defaultStatus setting
-        var i = settings.defaultStatus == 'closed' ? 0 : 1; 
+        // Initial state depends on defaultState setting
+        var i = settings.defaultState == 'closed' ? 0 : 1; 
         return function(){i++; return i % 2 == 0 ? 'open' : 'closed';};
       })();
     // Use cookie - normal case
@@ -107,8 +107,8 @@
         var cookieVal =  settings.getCookie(settings.cookieName); 
         if (cookieVal === 'open' || cookieVal === 'closed') {
           return cookieVal;
-        } else if (settings.defaultStatus === 'open' || settings.defaultStatus === 'closed'){
-          return settings.defaultStatus;
+        } else if (settings.defaultState === 'open' || settings.defaultState === 'closed'){
+          return settings.defaultState;
         } else {
           return 'open';
         }
@@ -155,7 +155,7 @@
   $.fn.persistentPanel.defaults = {
     changeTogglerContents: true,
     cookieName: 'persistentPanel',
-    defaultStatus: 'open',
+    defaultState: 'open',
     openDirection: 'down',
     speed: 500,
     toggler: '#panelToggler',
