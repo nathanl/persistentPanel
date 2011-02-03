@@ -26,13 +26,27 @@
         }).css('background-color','red');
 
         // Change a default setting - affects rest of instances on the page
-        $.fn.persistentPanel.defaults.speed = 5000;
+        $.fn.persistentPanel.defaults.speed = 250;
 
         $('#panel3').persistentPanel({
           openDirection: 'right', 
           toggler: '#panelToggler3',
-          cookieName: 'paneltacular'
+          cookieName: 'paneltacular',
+
+          // Custom cookie setting function. You must pass in the cookieName
+          // and value as shown here if you want your settings to be used and
+          // the 'open' and 'closed' value to be set correctly, but the options
+          // to jQuery.cookie can be set however you like - custom domain, secure
+          // cookie, etc. See the source code - it's very well-documented.
+          // setCookie:  function(cookieName, value) {
+          //   $.cookie(cookieName, value, { expires: 30, path: '/', domain: 'mysite.com', secure: true});
+          // }
         });
+
+      $('#panel4').nonPersistentPanel({
+        defaultStatus: 'open', 
+        toggler: '#panelToggler4'
+      });
 
       });
     </script>
@@ -54,7 +68,7 @@
         <li>Awesome</li>
         <li>Sweet</li>
         <li>Rad</li>
-        <li>T... tublar?</li>
+        <li>T... tubular?</li>
       </ul>
     </div>
     <div class="panelToggler" id="panelToggler"></div>
@@ -64,12 +78,12 @@
     <div class="code">
       // With some options
       $('#panel2').persistentPanel({
-      openFunction: function(speed) {$(this).fadeIn(speed);}
-      ,toggler: '#panelToggler2'
-      ,speed: 1000
-      ,togglerContentsOpen:  '&#x2191'
-      ,togglerContentsClosed:  '&#x2193'
-      ,cookieName: 'panelicous'
+        openFunction: function(speed) {$(this).fadeIn(speed);}
+        ,toggler: '#panelToggler2'
+        ,speed: 1000
+        ,togglerContentsOpen:  '&#x2191'
+        ,togglerContentsClosed:  '&#x2193'
+        ,cookieName: 'panelicous'
 
       // You can still chain other methods
       }).css('background-color','red');
@@ -86,12 +100,13 @@
     
     <div class="code">
       // Change a default setting - affects rest of instances on the page
-      $.fn.persistentPanel.defaults.speed = 5000;
+      $.fn.persistentPanel.defaults.speed = 50;
 
       $('#panel3').persistentPanel({
-      openDirection: 'right', 
-      toggler: '#panelToggler3',
-      cookieName: 'paneltacular'
+        openDirection: 'right', 
+        toggler: '#panelToggler3',
+        cookieName: 'paneltacular',
+
       });
     </div>
 
@@ -101,6 +116,24 @@
         <p>Don't you believe it. I mean, unless you like facts.</p>
       </div>
       <div class="panelToggler" id="panelToggler3"></div>
+    </div>
+
+    <hr>
+
+    <div class="code">
+
+      $('#panel4').nonPersistentPanel({
+        defaultStatus: 'open', 
+        toggler: '#panelToggler4'
+      });
+    </div>
+
+    <div>
+      <div class="panel" id="panel4">
+        <h2>This panel won't persist</h2>
+        <p>Note that I'm using nonPersistentPanel().</p>
+      </div>
+      <div class="panelToggler" id="panelToggler4"></div>
     </div>
 
   </body>

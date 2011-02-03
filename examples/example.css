@@ -12,7 +12,8 @@ div.panel {
 .panelToggler.open {background: none}
 .panelToggler.closed {color: #555;}
 
-#panel3, #panelToggler3 {display: inline; float: left;}
+#panel3, #panelToggler3 {float: left;}
+hr{clear: both;}
 
 .code {
   color: white;

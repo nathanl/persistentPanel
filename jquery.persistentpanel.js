@@ -12,18 +12,6 @@
     // Short name for internal use - exposed below for external modification
     var defaults = $.fn.persistentPanel.defaults;
 
-    // Always returns 'open' or 'closed'
-    var getCurrentState = function() {
-      var cookieVal =  settings.getCookie(settings.cookieName); 
-      if (cookieVal === 'open' || cookieVal === 'closed') {
-        return cookieVal;
-      } else if (settings.defaultStatus === 'open' || settings.defaultStatus === 'closed'){
-        return settings.defaultStatus;
-      } else {
-        return 'open';
-      }
-    };
-
     // Decide settings - Phase I
     // User settings overrule defaults, but merge both into an empty 
     // hash so that original defaults hash isn't modified
@@ -102,6 +90,30 @@
       $(settings.toggler).removeClass(settings.togglerClassOpen).addClass(settings.togglerClassClosed);
     };
 
+    // Will be a function that always returns 'open' or 'closed'
+    var getCurrentState;
+
+    // We are not going to set a cookie, so we need a closure to remember the
+    // toggle state
+    if (settings.doNotPersist) {
+      getCurrentState = (function(){
+        // Initial state depends on defaultStatus setting
+        i = settings.defaultStatus == 'open'? 0 : 1; 
+        return function(){i++; return i % 2 == 0 ? 'closed' : 'open';};
+      })();
+    } else {
+      getCurrentState = function() {
+        var cookieVal =  settings.getCookie(settings.cookieName); 
+        if (cookieVal === 'open' || cookieVal === 'closed') {
+          return cookieVal;
+        } else if (settings.defaultStatus === 'open' || settings.defaultStatus === 'closed'){
+          return settings.defaultStatus;
+        } else {
+          return 'open';
+        }
+      };
+    }
+
     var initialize = function(){
       // Decide if panel should initially be open or closed
       switch(getCurrentState()){
@@ -174,4 +186,13 @@
       }
     }
   };
+  $.fn.nonPersistentPanel = function(options) {
+    // Useless, but callable, cookie functions
+    options.setCookie = options.setCookie = function(){return null;}
+    
+    // The crucial option
+    options.doNotPersist = true;
+
+    $(this).persistentPanel(options);
+  }
 })( jQuery );
