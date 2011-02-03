@@ -129,6 +129,8 @@
 
     // Add namespaced click event listener
     $(settings.toggler).bind('click.persistentPanel',function(e){
+      e.preventDefault();
+      e.stopPropagation();
       switch($.data(panel, 'persistentPanelState')) {
       case 'open':
         close();
@@ -137,8 +139,6 @@
         open();
         break;
       }
-      // Don't follow that link
-      e.preventDefault();
     });
 
     // Maintain chainability
