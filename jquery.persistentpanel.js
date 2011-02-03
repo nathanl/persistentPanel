@@ -1,5 +1,5 @@
 // ---------------------------------------------
-// persistentPanel v1.1
+// persistentPanel v1.11
 // A jQuery plugin by Nathan Long
 // https://github.com/sleeplessgeek/persistentPanel
 // ---------------------------------------------
@@ -128,7 +128,7 @@
     initialize();
 
     // Add namespaced click event listener
-    $(settings.toggler).bind('click.persistentPanel',function(){
+    $(settings.toggler).bind('click.persistentPanel',function(e){
       switch($.data(panel, 'persistentPanelState')) {
       case 'open':
         close();
@@ -137,6 +137,8 @@
         open();
         break;
       }
+      // Don't follow that link
+      e.preventDefault();
     });
 
     // Maintain chainability
