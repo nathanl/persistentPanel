@@ -115,7 +115,11 @@ is clicked
       <td>Any valid jQuery selector string</td>
       <td>
         Which element, when clicked, should open and close your
-        panel?
+        panel? Note: I **strongly** recommend that you use an ID for this
+        selector; you may have more than one panel on the screen at some
+        point, and you don't want multiple togglers to affect the same panel.
+        (If you're using the same ID more than once per page, you're Doing 
+        It Wrong.)
       </td>
     </tr>
     <tr>
