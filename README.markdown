@@ -9,12 +9,25 @@ is clicked
  - Easy to use with defaults - just $('#somediv').persistentPanel();
  - You can pass in custom animations, cookie names, etc.
 
+## Warning
+
+Despite wanting to use [semantic versioning](http://www.semver.org), I jumped
+the gun on going to 1.0, which should mean "ready for the public to use and
+will have no backwards-incompatible changes in the API until version 2.0." I
+thought I was at this point, but I continue to find things I want to tweak in
+the API. Since I don't want to move rapidly through 2.0, 3.0, etc, I'm just
+warning you here that **this will be unstable until 2.0**.
+
+At that point, I plan to begin using semantic versioning properly, with patch,
+minor and major version changes following the numeric scheme linked above.
+
+My apologies for any confusion.
+
 ## Usage Examples
 
 (See examples/index.html)
 
 ## Options
- 
 
 <table>
   <thead>
