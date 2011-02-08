@@ -18,8 +18,9 @@
           openFunction: function(duration) {$(this).fadeIn(duration);},
           toggler: '#panelToggler2',
           duration: 1000,
-          togglerContentsOpen:  '&#x2191',
-          togglerContentsClosed:  '&#x2193',
+          // togglerContents: false,
+          // togglerContents: {open:'&#x2191',closed:'&#x2193'},
+          togglerContents: {open:'&#x2191'},
           cookieName: 'panelicous'
 
           // You can still chain other methods
@@ -94,7 +95,7 @@
       <p>Not all items on a page can be panels. But some of them can.</p>
       <p>They are the luckiest DOM elements of all.</p>
     </div>
-    <div class="panelToggler" id="panelToggler2"></div>
+    <div class="panelToggler" id="panelToggler2">Boring Toggler</div>
 
     <hr>
     

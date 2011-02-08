@@ -33,41 +33,41 @@
         case 'up':
           // Closed
           settings.closeFunction = settings.closeFunction || toggles.verticalClose;
-          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25B2'; // ▲
+          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25B2'; // ▲
 
           // Open
           settings.openFunction = settings.openFunction || toggles.verticalOpen;
-          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25BC'; // ▼
+          settings.togglerContents.open = settings.togglerContents.open || '&#x25BC'; // ▼
           break;
 
         case 'down':
           // Closed
           settings.closeFunction = settings.closeFunction || toggles.verticalClose;
-          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25BC'; // ▼
+          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25BC'; // ▼
 
           // Open
           settings.openFunction = settings.openFunction || toggles.verticalOpen;
-          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25B2'; // ▲
+          settings.togglerContents.open = settings.togglerContents.open || '&#x25B2'; // ▲
           break;
 
         case 'left':
           // Closed
           settings.closeFunction = settings.closeFunction || toggles.horizontalClose;
-          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25C0'; // ◀
+          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25C0'; // ◀
 
           // Open
           settings.openFunction = settings.openFunction || toggles.horizontalOpen;
-          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25B6'; // ▶
+          settings.togglerContents.open = settings.togglerContents.open || '&#x25B6'; // ▶
           break;
 
         case 'right':
           // Closed
           settings.closeFunction = settings.closeFunction || toggles.horizontalClose;
-          settings.togglerContentsClosed = settings.togglerContentsClosed || '&#x25B6'; // ▶
+          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25B6'; // ▶
 
           // Open
           settings.openFunction = settings.openFunction || toggles.horizontalOpen;
-          settings.togglerContentsOpen = settings.togglerContentsOpen || '&#x25C0'; // ◀
+          settings.togglerContents.open = settings.togglerContents.open || '&#x25C0'; // ◀
           break;
     }
 
@@ -77,8 +77,8 @@
       $.data(panel, 'persistentPanelState', 'open');
       settings['openFunction'].call(panel, duration === undefined ? settings.duration : duration);
       settings['setCookie'].call(panel, settings.cookieName, 'open');
-      if (settings.changeTogglerContents){
-        $(settings.toggler).html(settings.togglerContentsOpen);
+      if (settings.togglerContents && settings.togglerContents.open){
+        $(settings.toggler).html(settings.togglerContents.open);
       }
       $(settings.toggler).removeClass(settings.togglerClassClosed).addClass(settings.togglerClassOpen);
     };
@@ -86,8 +86,8 @@
       $.data(panel, 'persistentPanelState', 'closed');
       settings['closeFunction'].call(panel, duration === undefined ? settings.duration : duration);
       settings['setCookie'].call(panel, settings.cookieName, 'closed');
-      if (settings.changeTogglerContents){
-        $(settings.toggler).html(settings.togglerContentsClosed);
+      if (settings.togglerContents && settings.togglerContents.closed){
+        $(settings.toggler).html(settings.togglerContents.closed);
       }
       $(settings.toggler).removeClass(settings.togglerClassOpen).addClass(settings.togglerClassClosed);
     };
@@ -111,14 +111,14 @@
       switch(initialState){
       case 'open':
         open(0);
-        if (settings.changeTogglerContents){
-          $(settings.toggler).html(settings.togglerContentsOpen);
+        if (settings.togglerContents && settings.togglerContents.open){
+          $(settings.toggler).html(settings.togglerContents.open);
         }
         break;
       case 'closed':
         close(0);
-        if (settings.changeTogglerContents){
-          $(settings.toggler).html(settings.togglerContentsClosed);
+        if (settings.togglerContents && settings.togglerContents.closed){
+          $(settings.toggler).html(settings.togglerContents.closed);
         }
         break;
       }
@@ -146,7 +146,7 @@
   };
 
   $.fn.persistentPanel.defaults = {
-    changeTogglerContents: true,
+    togglerContents: {open: null, closed: null},
     cookieName: 'persistentPanel',
     defaultState: 'open',
     openDirection: 'down',
