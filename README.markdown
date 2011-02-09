@@ -27,7 +27,7 @@ My apologies for any confusion.
 
 (See examples/index.html)
 
-## Options (as of v1.13)
+## Options (as of v1.20)
 
 <table>
   <thead>
@@ -123,23 +123,17 @@ My apologies for any confusion.
       </td>
     </tr>
     <tr>
-      <td>togglerClassClosed</td>
-      <td>'closed'</td>
-      <td>Any valid CSS class name</td>
+      <td>togglerClass</td>
+      <td>{open: 'open', closed: 'closed'}</td>
+      <td>false <br/> Object with properties 'open' and/or 'closed' - values can be any valid CSS class name</td>
       <td>
-        When your toggler is clicked and the panel closes, this class will
-        be applied to the toggler. You could use it to change a background
-        image, for example.
-      </td>
-    </tr>
-    <tr>
-      <td>togglerClassOpen</td>
-      <td>'open'</td>
-      <td>Any valid CSS class name</td>
-      <td>
-        When your toggler is clicked and the panel opens, this class will
-        be applied to the toggler. You could use it to change a background
-        image, for example.
+        When your toggler is clicked and the panel opens or closes, the
+        class specified here will be applied to the toggler. If you only 
+        specify one of the classes, the other will use the default. 
+        These classes could be used to change a background image, for 
+        example, instead of changing the togglerContents.
+        If this option is set to false, the toggler's class will not be
+        changed.
       </td>
     </tr>
     <tr>

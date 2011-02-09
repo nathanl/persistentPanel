@@ -1,5 +1,5 @@
 // ---------------------------------------------
-// persistentPanel v1.13
+// persistentPanel v1.20
 // A jQuery plugin by Nathan Long
 // https://github.com/sleeplessgeek/persistentPanel
 // ---------------------------------------------
@@ -15,7 +15,7 @@
     // Decide settings - Phase I
     // User settings overrule defaults, but merge both into an empty 
     // hash so that original defaults hash isn't modified
-    var settings = $.extend({}, defaults, userOptions);
+    var settings = $.extend(true, {}, defaults, userOptions);
 
     // Decide settings - Phase II. 
     //
@@ -80,7 +80,9 @@
       if (settings.togglerContents && settings.togglerContents.open){
         $(settings.toggler).html(settings.togglerContents.open);
       }
-      $(settings.toggler).removeClass(settings.togglerClassClosed).addClass(settings.togglerClassOpen);
+      if (settings.togglerClass) {
+        $(settings.toggler).removeClass(settings.togglerClass.closed).addClass(settings.togglerClass.open);
+      }
     };
     var close = function(duration) {
       $.data(panel, 'persistentPanelState', 'closed');
@@ -89,7 +91,9 @@
       if (settings.togglerContents && settings.togglerContents.closed){
         $(settings.toggler).html(settings.togglerContents.closed);
       }
-      $(settings.toggler).removeClass(settings.togglerClassOpen).addClass(settings.togglerClassClosed);
+      if (settings.togglerClass) {
+        $(settings.toggler).removeClass(settings.togglerClass.open).addClass(settings.togglerClass.closed);
+      }
     };
 
     var initialize = function(){
@@ -146,14 +150,13 @@
   };
 
   $.fn.persistentPanel.defaults = {
-    togglerContents: {open: null, closed: null},
+    togglerContents: {open: null, closed: null}, // To be determined by openDirection
     cookieName: 'persistentPanel',
     defaultState: 'open',
     openDirection: 'down',
     duration: 500,
     toggler: '#panelToggler',
-    togglerClassClosed: 'closed',
-    togglerClassOpen: 'open',
+    togglerClass: {open: 'open', closed: 'closed'},
     // Functions
     getCookie:  function(cookieName) {return $.cookie(cookieName);},
     setCookie:  function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});},

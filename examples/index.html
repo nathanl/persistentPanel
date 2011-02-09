@@ -18,8 +18,6 @@
           openFunction: function(duration) {$(this).fadeIn(duration);},
           toggler: '#panelToggler2',
           duration: 1000,
-          // togglerContents: false,
-          // togglerContents: {open:'&#x2191',closed:'&#x2193'},
           togglerContents: {open:'&#x2191'},
           cookieName: 'panelicous'
 
@@ -33,6 +31,7 @@
           openDirection: 'right', 
           toggler: '#panelToggler3',
           cookieName: 'paneltacular',
+          togglerClass: false
 
           // Custom cookie setting function. You must pass in the cookieName
           // and value as shown here if you want your settings to be used and
@@ -82,8 +81,7 @@
         openFunction: function(duration) {$(this).fadeIn(duration);},
         toggler: '#panelToggler2',
         duration: 1000,
-        togglerContentsOpen:  '&amp;&#35;x2191',
-        togglerContentsClosed:  '&amp;&#35;x2193',
+        togglerContents: {open:'&amp;#x2191'},
         cookieName: 'panelicous'
 
         // You can still chain other methods
