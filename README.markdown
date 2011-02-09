@@ -204,3 +204,11 @@ If you want to use the other functionality of persistentPanel - the
 animation, the toggler contents, etc - but do NOT want your panel to remember
 its state when the page is reloaded, it's easy: call
 $('#someElement').nonPersistentPanel();
+
+I don't expect anybody to install this script just to use nonPersistentPanel(); what
+it does could be accomplished with a pretty simple toggle function. But if you're
+already using persistentPanel, this lets your panels that don't need cookies
+use a shorter syntax that looks more like the ones that do.
+
+Under the hood, all it does is call persistentPanel() with its options, overriding
+the setCookie and getCookie functions to do nothing.
