@@ -27,26 +27,13 @@ My apologies for any confusion.
 
 (See examples/index.html)
 
-## Options
+## Options (as of v1.13)
 
 <table>
   <thead>
     <tr><th>Setting Name</th><th>Default Value</th><th>Valid Values</th><th>Description</th></tr>
   </thead>
   <tbody>
-    <tr>
-      <td>changeTogglerContents</td>
-      <td>true</td>
-      <td>true<br/>false</td>
-      <td> 
-        Whether to replace the contents of your specified toggler
-        element with the contents of togglerContentsOpen and
-        togglerContentsClosed when it your panel is opened and closed,
-        respectively. If you set this to false, the togglerContents
-        settings will not be used and the toggler element's contents will
-        not be modified.
-      </td>
-    </tr>
     <tr>
       <td>closeFunction</td>
       <td>(depends on openDirection)</td>
@@ -91,7 +78,7 @@ My apologies for any confusion.
       <td>'up' <br/> 'down' <br/> 'left' <br/> 'right'</td>
       <td>
         Is used to determine default values for openFunction,
-        closeFunction, togglerContentsOpen and togglerContentsClosed. If
+        closeFunction, togglerContents.open and togglerContents.closed. If
         you provide your own values for all of those, this setting does
         nothing. (Note: opening 'up' and 'left' is currently identical to
         opening 'down' or 'right'.)
@@ -146,16 +133,6 @@ My apologies for any confusion.
       </td>
     </tr>
     <tr>
-      <td>togglerContentsClosed</td>
-      <td>(unicode arrow - depends on openDirection)</td>
-      <td>Any HTML</td>
-      <td>
-        When your toggler is clicked and the panel closes, the toggler's
-        contents will be replaced with this, unless changeTogglerContents
-        is false.
-      </td>
-    </tr>
-    <tr>
       <td>togglerClassOpen</td>
       <td>'open'</td>
       <td>Any valid CSS class name</td>
@@ -166,13 +143,22 @@ My apologies for any confusion.
       </td>
     </tr>
     <tr>
-      <td>togglerContentsOpen</td>
-      <td>(unicode arrow - depends on openDirection)</td>
-      <td>Any HTML</td>
+      <td>togglerContents</td>
+      <td>(unicode arrows - depends on openDirection)</td>
+      <td>false <br/> {open: 'someHTML'} <br/> {closed: 'someHTML'} <br/> {open: 'someHTML', closed: 'someHTML'}</td>
       <td>
-        When your toggler is clicked and the panel opens, the toggler's
-        contents will be replaced with this, unless changeTogglerContents
-        is false.
+        If set to false, the contents of your toggler element will not be
+        modified when your toggler is opened and closed (on page load,
+        the toggler is immediately either opened or closed.)
+        If set to an object containing the keys 'open', 'closed' or both,
+        the contents of the toggler will be replaced with the value of the
+        corresponding key when the toggler is opened or closed. If one option
+        is not specified, it will be filled in from the defaults, based on the
+        openDirection.<br/>
+        For example, if your openDirection is 'down', and you pass in 
+        togglerContents: {closed: 'open me!'}, then when your panel is closed,
+        the toggler will contain 'open me!', and when your panel is open,
+        it will contain the default up arrow.
       </td>
     </tr>
     <tr>
