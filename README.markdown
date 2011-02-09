@@ -43,11 +43,11 @@ My apologies for any confusion.
        openDirection (which also has its own default). If you do specify a
        closeFunction, it should accept a duration parameter. This is for two
        reasons:
-       <ul>
+       <ol>
          <li>Your duration setting will be passed to this function</li>
          <li>On page load, if the panel should be closed, this function will be
          called with a duration of 0 (meaning "close instantly").</li>
-       </ul> 
+       </ol> 
       </td>
     </tr>
     <tr>
@@ -66,7 +66,7 @@ My apologies for any confusion.
     <tr>
       <td>defaultState</td>
       <td>'closed'</td>
-      <td>'open' <br/> 'closed'</td>
+      <td><ol><li>'open'</li><li>'closed'</li></ol></td>
       <td>
         If no cookie is set, should the panel start out open or
         closed?
@@ -75,7 +75,7 @@ My apologies for any confusion.
     <tr>
       <td>openDirection</td>
       <td>'down'</td>
-      <td>'up' <br/> 'down' <br/> 'left' <br/> 'right'</td>
+      <td><ol><li>'up'</li><li>'down'</li><li>'left'</li><li>'right'</li></ol></td>
       <td>
         Is used to determine default values for openFunction,
         closeFunction, togglerContents.open and togglerContents.closed. If
@@ -93,11 +93,11 @@ My apologies for any confusion.
        openDirection (which also has its own default). If you do specify an
        openFunction, it should accept a duration parameter. This is for two
        reasons:
-       <ul>
+       <ol>
          <li>Your duration setting will be passed to this function</li>
          <li>On page load, if the panel should be open, this function will be
          called with a duration of 0 (meaning "open instantly").</li>
-       </ul> 
+       </ol> 
       </td>
     </tr>
     <tr>
@@ -125,7 +125,7 @@ My apologies for any confusion.
     <tr>
       <td>togglerClass</td>
       <td>{open: 'open', closed: 'closed'}</td>
-      <td>false <br/> Object with properties 'open' and/or 'closed' - values can be any valid CSS class name</td>
+      <td><ol><li>false</li><li>Object with properties 'open' and/or 'closed' - values can be any valid CSS class name</li></ol></td>
       <td>
         When your toggler is clicked and the panel opens or closes, the
         class specified here will be applied to the toggler. If you only 
@@ -139,7 +139,7 @@ My apologies for any confusion.
     <tr>
       <td>togglerContents</td>
       <td>(unicode arrows - depends on openDirection)</td>
-      <td>false <br/> {open: 'someHTML'} <br/> {closed: 'someHTML'} <br/> {open: 'someHTML', closed: 'someHTML'}</td>
+      <td><ol><li>false</li><li>{open: 'someHTML'}</li><li>{closed: 'someHTML'}</li><li>{open: 'someHTML', closed: 'someHTML'}</li></ol></td>
       <td>
         If set to false, the contents of your toggler element will not be
         modified when your toggler is opened and closed (on page load,
@@ -162,11 +162,11 @@ My apologies for any confusion.
       <td>
         By default, this function uses the jQuery.cookie plugin. If you
         don't want this dependency, pass in your own function. It should:
-        <ul>
+        <ol>
           <li>Accept cookieName as a parameter, so that the panel can
           request the correct cookie for itself</li>
           <li>Return the string value of the cookie</li>
-        </ul>
+        </ol>
       </td>
     </tr>
     <tr>
