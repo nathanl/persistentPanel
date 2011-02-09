@@ -65,7 +65,7 @@ My apologies for any confusion.
     </tr>
     <tr>
       <td>defaultState</td>
-      <td>'open'</td>
+      <td>'closed'</td>
       <td>'open' <br/> 'closed'</td>
       <td>
         If no cookie is set, should the panel start out open or

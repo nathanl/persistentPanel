@@ -152,7 +152,7 @@
   $.fn.persistentPanel.defaults = {
     togglerContents: {open: null, closed: null}, // To be determined by openDirection
     cookieName: 'persistentPanel',
-    defaultState: 'open',
+    defaultState: 'closed',
     openDirection: 'down',
     duration: 500,
     toggler: '#panelToggler',
