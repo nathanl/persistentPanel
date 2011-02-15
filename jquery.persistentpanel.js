@@ -32,41 +32,41 @@
 
         case 'up':
           // Closed
-          settings.closeFunction = settings.closeFunction || toggles.verticalClose;
+          settings.animations.close = settings.animations.close || toggles.verticalClose;
           settings.togglerContents.closed = settings.togglerContents.closed || '&#x25B2'; // ▲
 
           // Open
-          settings.openFunction = settings.openFunction || toggles.verticalOpen;
+          settings.animations.open = settings.animations.open || toggles.verticalOpen;
           settings.togglerContents.open = settings.togglerContents.open || '&#x25BC'; // ▼
           break;
 
         case 'down':
           // Closed
-          settings.closeFunction = settings.closeFunction || toggles.verticalClose;
+          settings.animations.close = settings.animations.close || toggles.verticalClose;
           settings.togglerContents.closed = settings.togglerContents.closed || '&#x25BC'; // ▼
 
           // Open
-          settings.openFunction = settings.openFunction || toggles.verticalOpen;
+          settings.animations.open = settings.animations.open || toggles.verticalOpen;
           settings.togglerContents.open = settings.togglerContents.open || '&#x25B2'; // ▲
           break;
 
         case 'left':
           // Closed
-          settings.closeFunction = settings.closeFunction || toggles.horizontalClose;
+          settings.animations.close = settings.animations.close || toggles.horizontalClose;
           settings.togglerContents.closed = settings.togglerContents.closed || '&#x25C0'; // ◀
 
           // Open
-          settings.openFunction = settings.openFunction || toggles.horizontalOpen;
+          settings.animations.open = settings.animations.open || toggles.horizontalOpen;
           settings.togglerContents.open = settings.togglerContents.open || '&#x25B6'; // ▶
           break;
 
         case 'right':
           // Closed
-          settings.closeFunction = settings.closeFunction || toggles.horizontalClose;
+          settings.animations.close = settings.animations.close || toggles.horizontalClose;
           settings.togglerContents.closed = settings.togglerContents.closed || '&#x25B6'; // ▶
 
           // Open
-          settings.openFunction = settings.openFunction || toggles.horizontalOpen;
+          settings.animations.open = settings.animations.open || toggles.horizontalOpen;
           settings.togglerContents.open = settings.togglerContents.open || '&#x25C0'; // ◀
           break;
     }
@@ -75,7 +75,7 @@
     // set cookie, change toggler contents (if applicable) and set toggler class
     var open = function(duration) {
       $.data(panel, 'persistentPanelState', 'open');
-      settings['openFunction'].call(panel, duration === undefined ? settings.duration : duration);
+      settings.animations.open.call(panel, duration === undefined ? settings.duration : duration);
       settings['setCookie'].call(panel, settings.cookieName, 'open');
       if (settings.togglerContents && settings.togglerContents.open){
         $(settings.toggler).html(settings.togglerContents.open);
@@ -86,7 +86,7 @@
     };
     var close = function(duration) {
       $.data(panel, 'persistentPanelState', 'closed');
-      settings['closeFunction'].call(panel, duration === undefined ? settings.duration : duration);
+      settings.animations.close.call(panel, duration === undefined ? settings.duration : duration);
       settings['setCookie'].call(panel, settings.cookieName, 'closed');
       if (settings.togglerContents && settings.togglerContents.closed){
         $(settings.toggler).html(settings.togglerContents.closed);
@@ -151,6 +151,7 @@
 
   $.fn.persistentPanel.defaults = {
     togglerContents: {open: null, closed: null}, // To be determined by openDirection
+    animations: {open: null, close: null}, // To be determined by openDirection
     cookieName: 'persistentPanel',
     defaultState: 'closed',
     openDirection: 'down',

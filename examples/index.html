@@ -15,7 +15,7 @@
 
         // With some options
         $('#panel2').persistentPanel({
-          openFunction: function(duration) {$(this).fadeIn(duration);},
+          animations: {open: function(duration) {$(this).fadeIn(duration);}},
           toggler: '#panelToggler2',
           duration: 1000,
           togglerContents: {open:'&#x2191'},
@@ -78,7 +78,7 @@
     <div class="code">
       // With some options
       $('#panel2').persistentPanel({
-        openFunction: function(duration) {$(this).fadeIn(duration);},
+        animations: {open: function(duration) {$(this).fadeIn(duration);}},
         toggler: '#panelToggler2',
         duration: 1000,
         togglerContents: {open:'&amp;#x2191'},
