@@ -7,6 +7,7 @@
 (function( $ ) {
   $.fn.persistentPanel = function(userOptions) {
     var panel = $(this);
+
     // Define default options and override with user-specified
     //
     // Short name for internal use - exposed below for external modification
@@ -126,6 +127,10 @@
         }
         break;
       }
+
+      // Stash settings here for access by default methods
+      panel.data('panelSettings', settings);
+
     };
 
     // Get things started
@@ -163,16 +168,15 @@
     setCookie:  function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});},
     toggles: {
       horizontalClose: function(duration){
-        // Stash original width and display values before hiding
-        $(this).data('width',$(this).width()); 
-        $(this).data('display',$(this).css('display'));
-        $(this).animate({width: 0, opacity: 0},duration,function(){$(this).css('display','none');});
+        var settings = $(this).data('panelSettings');
+        console.log(settings);
+        var togglerWidth = function(){return $(settings.toggler).outerWidth();}
+        var left = (0 - $(this).outerWidth() + togglerWidth()) + 'px';
+        $(this).animate({left: left}, duration);
       },
 
       horizontalOpen: function(duration){
-        // Restore previous width and display values
-        $(this).css('display',$(this).data('display'));
-        $(this).animate({width: $(this).data('width'), opacity: 1},duration);
+        $(this).animate({left: '0px'}, duration);
       }, 
 
       verticalClose: function(duration){

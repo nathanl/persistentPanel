@@ -12,7 +12,9 @@ div.panel {
 .panelToggler.open {background: none}
 .panelToggler.closed {color: #555;}
 
-#panel3, #panelToggler3 {float: left;}
+#panel3wrapper {position: relative; display: inline-block;}
+#panel3 {position: relative; display: inline-block;}
+#panelToggler3 {}
 hr{clear: both;}
 
 .code {
