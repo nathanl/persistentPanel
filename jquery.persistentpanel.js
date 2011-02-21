@@ -4,6 +4,8 @@
 // https://github.com/sleeplessgeek/persistentPanel
 // ---------------------------------------------
 
+// var settings;
+
 (function( $ ) {
   $.fn.persistentPanel = function(userOptions) {
     var panel = $(this);
@@ -21,35 +23,15 @@
     // Decide settings - Phase II. 
     //
     // First, ensure that we have a valid openDirection
-    var o = settings.openDirection;
-    if (!(o === 'up' || o === 'down' || o === 'left' || o === 'right')){
-      settings.openDirection = 'down';
-    }
+    // var o = settings.openDirection;
+    // if (!(o === 'up' || o === 'down' || o === 'left' || o === 'right')){
+    //   settings.openDirection = 'down';
+    // }
 
     // Settings that depend on the open direction setting for their defaults
     // (If any of these already have values, we leave them alone)
     var toggles = defaults.toggles;
     switch (settings.openDirection) {
-
-        case 'up':
-          // Closed
-          settings.animations.close = settings.animations.close || toggles.verticalClose;
-          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25B2'; // ▲
-
-          // Open
-          settings.animations.open = settings.animations.open || toggles.verticalOpen;
-          settings.togglerContents.open = settings.togglerContents.open || '&#x25BC'; // ▼
-          break;
-
-        case 'down':
-          // Closed
-          settings.animations.close = settings.animations.close || toggles.verticalClose;
-          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25BC'; // ▼
-
-          // Open
-          settings.animations.open = settings.animations.open || toggles.verticalOpen;
-          settings.togglerContents.open = settings.togglerContents.open || '&#x25B2'; // ▲
-          break;
 
         case 'left':
           // Closed
@@ -70,6 +52,28 @@
           settings.animations.open = settings.animations.open || toggles.horizontalOpen;
           settings.togglerContents.open = settings.togglerContents.open || '&#x25C0'; // ◀
           break;
+
+        case 'up':
+          // Closed
+          settings.animations.close = settings.animations.close || toggles.verticalClose;
+          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25B2'; // ▲
+
+          // Open
+          settings.animations.open = settings.animations.open || toggles.verticalOpen;
+          settings.togglerContents.open = settings.togglerContents.open || '&#x25BC'; // ▼
+          break;
+
+        case 'down':
+        default:
+          // Closed
+          settings.animations.close = settings.animations.close || toggles.verticalClose;
+          settings.togglerContents.closed = settings.togglerContents.closed || '&#x25BC'; // ▼
+
+          // Open
+          settings.animations.open = settings.animations.open || toggles.verticalOpen;
+          settings.togglerContents.open = settings.togglerContents.open || '&#x25B2'; // ▲
+          break;
+
     }
 
     // Internal open and close functions - call the toggle function,
@@ -155,6 +159,8 @@
   };
 
   $.fn.persistentPanel.defaults = {
+    // opts: settings,
+    // getSettings: function(){return settings;},
     togglerContents: {open: null, closed: null}, // To be determined by openDirection
     animations: {open: null, close: null}, // To be determined by openDirection
     cookieName: 'persistentPanel',
@@ -167,10 +173,10 @@
     getCookie:  function(cookieName) {return $.cookie(cookieName);},
     setCookie:  function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});},
     toggles: {
+      // opts: this.getSettings(),
       horizontalClose: function(duration){
-        var settings = $(this).data('panelSettings');
-        console.log(settings);
-        var togglerWidth = function(){return $(settings.toggler).outerWidth();}
+        // var togglerWidth = function(){return $(settings.toggler).outerWidth();};
+        var togglerWidth = function(){return 40;}; // Dummy value for now
         var left = (0 - $(this).outerWidth() + togglerWidth()) + 'px';
         $(this).animate({left: left}, duration);
       },
@@ -190,8 +196,8 @@
   };
   $.fn.nonPersistentPanel = function(options) {
     // Useless, but callable, cookie functions
-    options.setCookie = options.getCookie = function(){return null;}
+    options.setCookie = options.getCookie = function(){return null;};
 
     $(this).persistentPanel(options);
-  }
+  };
 })( jQuery );
