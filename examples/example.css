@@ -1,7 +1,8 @@
-html{background: #444; color: white; font-face: arial;}
+/* TODO: Fix CSS! Height is broken on panels; panels and code overlapping */
+html, body{background: #444; color: white; font-face: arial;}
 div.panel {
   width: 150px; 
-  /* height: 150px;  */
+  height: 150px; 
   padding: 10px;
   background-color: #225; 
   border-radius: 10px;
@@ -12,9 +13,12 @@ div.panel {
 .panelToggler.open {background: none}
 .panelToggler.closed {color: #555;}
 
-/* #panel3wrapper {position: relative; display: inline-block;} */
-/* #panel3 {position: relative; display: inline-block;} */
-/* #panelToggler3 {} */
+#panel3wrapper, {position: absolute;}
+#panel3, #panelToggler3, #panel4, #panelToggler4 {position: relative; display: inline-block;}
+.panelWrapper {position: absolute;}
+#panel4wrapper {right: 0;}
+
+#panelToggler3 {}
 hr{clear: both;}
 
 .code {

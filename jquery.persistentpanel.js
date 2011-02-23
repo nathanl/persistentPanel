@@ -80,7 +80,7 @@
     // set cookie, change toggler contents (if applicable) and set toggler class
     var open = function(duration) {
       $.data(panel, 'persistentPanelState', 'open');
-      settings.animations.open.call(panel, duration === undefined ? settings.duration : duration);
+      settings.animations.open.call(panel, duration === undefined ? settings.duration : duration, settings);
       settings['setCookie'].call(panel, settings.cookieName, 'open');
       if (settings.togglerContents && settings.togglerContents.open){
         $(settings.toggler).html(settings.togglerContents.open);
@@ -91,7 +91,7 @@
     };
     var close = function(duration) {
       $.data(panel, 'persistentPanelState', 'closed');
-      settings.animations.close.call(panel, duration === undefined ? settings.duration : duration);
+      settings.animations.close.call(panel, duration === undefined ? settings.duration : duration, settings);
       settings['setCookie'].call(panel, settings.cookieName, 'closed');
       if (settings.togglerContents && settings.togglerContents.closed){
         $(settings.toggler).html(settings.togglerContents.closed);
@@ -118,16 +118,17 @@
 
       // Decide if panel should initially be open or closed
       switch(initialState){
-      case 'open':
-        open(0);
-        if (settings.togglerContents && settings.togglerContents.open){
-          $(settings.toggler).html(settings.togglerContents.open);
-        }
-        break;
       case 'closed':
         close(0);
         if (settings.togglerContents && settings.togglerContents.closed){
           $(settings.toggler).html(settings.togglerContents.closed);
+        }
+        break;
+      case 'open':
+      default:
+        open(0);
+        if (settings.togglerContents && settings.togglerContents.open){
+          $(settings.toggler).html(settings.togglerContents.open);
         }
         break;
       }
@@ -159,8 +160,6 @@
   };
 
   $.fn.persistentPanel.defaults = {
-    // opts: settings,
-    // getSettings: function(){return settings;},
     togglerContents: {open: null, closed: null}, // To be determined by openDirection
     animations: {open: null, close: null}, // To be determined by openDirection
     cookieName: 'persistentPanel',
@@ -173,23 +172,34 @@
     getCookie:  function(cookieName) {return $.cookie(cookieName);},
     setCookie:  function(cookieName, value) {$.cookie(cookieName, value, { expires: 30, path: '/'});},
     toggles: {
-      // opts: this.getSettings(),
-      horizontalClose: function(duration){
-        // var togglerWidth = function(){return $(settings.toggler).outerWidth();};
-        var togglerWidth = function(){return 40;}; // Dummy value for now
-        var left = (0 - $(this).outerWidth() + togglerWidth()) + 'px';
-        $(this).animate({left: left}, duration);
+      horizontalClose: function(duration, settings){
+        // Determine opposite direction of openDirection
+        var dir = settings.openDirection === 'left' ? 'right' : 'left';
+        var togglerWidth = $(settings.toggler).outerWidth(true);
+        // TODO: Make this take into account all measurements that I know are
+        // relevent - body and html margin and padding.
+        // Work out bug with left and right animating asymmetrically
+        var documentMargin = parseInt($(this).closest('body').css('margin-' + dir),10);
+        var dist = (0 - ($(this).outerWidth(true) + documentMargin) + togglerWidth);
+        console.log($(this).outerWidth(true));
+        var animationOpts = {};
+        animationOpts[dir] = dist + 'px';
+        console.log(animationOpts);
+         $(this).animate(animationOpts, duration);
       },
 
-      horizontalOpen: function(duration){
-        $(this).animate({left: '0px'}, duration);
+      horizontalOpen: function(duration, settings){
+        var dir = settings.openDirection === 'left' ? 'right' : 'left';
+        var animationOpts = {};
+        animationOpts[dir] = '0px';
+        $(this).animate(animationOpts, duration);
       }, 
 
-      verticalClose: function(duration){
+      verticalClose: function(duration, settings){
         $(this).slideUp(duration);
       },
 
-      verticalOpen: function(duration){
+      verticalOpen: function(duration, settings){
         $(this).slideDown(duration);
       }
     }

@@ -43,8 +43,24 @@
           // }
         });
 
-      $('#panel4').nonPersistentPanel({
-        toggler: '#panelToggler4',
+        $('#panel4wrapper').persistentPanel({
+          openDirection: 'left', 
+          toggler: '#panelToggler4',
+          cookieName: 'paneltacular',
+          togglerClass: false
+
+          // Custom cookie setting function. You must pass in the cookieName
+          // and value as shown here if you want your settings to be used and
+          // the 'open' and 'closed' value to be set correctly, but the options
+          // to jQuery.cookie can be set however you like - custom domain, secure
+          // cookie, etc. See the source code - it's very well-documented.
+          // setCookie:  function(cookieName, value) {
+          //   $.cookie(cookieName, value, { expires: 30, path: '/', domain: 'mysite.com', secure: true});
+          // }
+        });
+
+      $('#panel5').nonPersistentPanel({
+        toggler: '#panelToggler5',
         defaultState: 'closed'
       });
 
@@ -109,7 +125,7 @@
       });
     </div>
 
-    <div id="panel3wrapper">
+    <div id="panel3wrapper" class="panelWrapper">
       <div class="panel" id="panel3">
         <h2>Not a panel</h2>
         <p>Don't you believe it. I mean, unless you like facts.</p>
@@ -120,19 +136,41 @@
     <hr>
 
     <div class="code">
+      // Change a default setting - affects rest of instances on the page
+      $.fn.persistentPanel.defaults.duration = 50;
 
-      $('#panel4').nonPersistentPanel({
-      toggler: '#panelToggler4',
+      $('#panel4').persistentPanel({
+        openDirection: 'right', 
+        toggler: '#panelToggler3',
+        cookieName: 'paneltacular',
+
+      });
+    </div>
+
+    <div id="panel4wrapper" class="panelWrapper">
+      <span class="panelToggler" id="panelToggler4"></span>
+      <div class="panel" id="panel4">
+        <h2>Not a panel</h2>
+        <p>Don't you believe it. I mean, unless you like facts.</p>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="code">
+
+      $('#panel5').nonPersistentPanel({
+      toggler: '#panelToggler5',
       defaultState: 'closed'
       });
     </div>
 
     <div>
-      <div class="panel" id="panel4">
+      <div class="panel" id="panel5">
         <h2>This panel won't persist</h2>
         <p>Note that I'm using nonPersistentPanel().</p>
       </div>
-      <div class="panelToggler" id="panelToggler4"></div>
+      <div class="panelToggler" id="panelToggler5"></div>
     </div>
 
   </body>
