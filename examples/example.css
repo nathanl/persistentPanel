@@ -4,13 +4,13 @@ div.panel {
   width: 150px; 
   height: 150px; 
   padding: 10px;
+  margin: 10px;
   background-color: #225; 
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
 }
-.panelToggler{width: 2em;}
-.panelToggler.open {background: none}
+/* .panelToggler {margin: 5px; padding: 2px;} */
 .panelToggler.closed {color: #555;}
 
 #panel3wrapper, {position: absolute;}
