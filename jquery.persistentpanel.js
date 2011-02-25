@@ -21,12 +21,6 @@
     var settings = $.extend(true, {}, defaults, userOptions);
 
     // Decide settings - Phase II. 
-    //
-    // First, ensure that we have a valid openDirection
-    // var o = settings.openDirection;
-    // if (!(o === 'up' || o === 'down' || o === 'left' || o === 'right')){
-    //   settings.openDirection = 'down';
-    // }
 
     // Settings that depend on the open direction setting for their defaults
     // (If any of these already have values, we leave them alone)
@@ -85,7 +79,6 @@
       if (settings.togglerContents && settings.togglerContents.open){
         $(settings.toggler).html(settings.togglerContents.open);
       }
-      // TODO: Why isn't this class being set?
       if (settings.togglerClass) {
         $(settings.toggler).removeClass(settings.togglerClass.closed).addClass(settings.togglerClass.open);
       }
@@ -180,7 +173,6 @@
         // Default mode will be to slide the panel off screen and back on,
         // leaving the toggler visible.
         var dist = 0 - ($(this).outerWidth(true) - (($(this).outerWidth(true) - $(this).width()) / 2) - $(settings.toggler).outerWidth(true));
-        console.log('dist is ' + dist);
         var animationOpts = {};
         animationOpts[dir] = dist + 'px';
          $(this).animate(animationOpts, duration);
