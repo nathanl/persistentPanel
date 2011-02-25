@@ -151,6 +151,7 @@
         close();
         break;
       case 'closed':
+      default:
         open();
         break;
       }
