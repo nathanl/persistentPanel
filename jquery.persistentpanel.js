@@ -177,18 +177,8 @@
         // Determine opposite direction of openDirection
         var dir = settings.openDirection === 'left' ? 'right' : 'left';
         // Default mode will be to slide the panel off screen and back on,
-        // leaving the toggler visible. We need to know the panel's width, the
-        // toggler's width, and the margin and padding at the edge of the page.
-        var togglerWidth = $(settings.toggler).outerWidth(true);
-        // TODO: Make this take into account all measurements that I know are
-        // relevent - body and html margin and padding.
-        var documentMargin = parseInt($(this).closest('body').css('margin-' + dir),10);
-        // Not correct yet. Trying to move the panel past its own left margin,
-        // border and padding (thus the outerwidth minus the plain width,
-        // divided by 2 to get one side only), and past the document
-        // padding/margin on one side, and past the plain width of the panel
-        // EXCEPTING the toggler's width. Something is wrong, though.
-        var dist = 0 - ((($(this).outerWidth(true) - $(this).width()) / 2) + ($(this).width() - togglerWidth) + documentMargin); 
+        // leaving the toggler visible.
+        var dist = 0 - ($(this).outerWidth(true) - (($(this).outerWidth(true) - $(this).width()) / 2) - $(settings.toggler).outerWidth(true));
         console.log('dist is ' + dist);
         var animationOpts = {};
         animationOpts[dir] = dist + 'px';

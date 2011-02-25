@@ -1,8 +1,7 @@
 /* TODO: Fix CSS! Height is broken on panels; panels and code overlapping */
-html, body{background: #444; color: white; font-face: arial;}
+html, body{background: #444; color: white; font-face: arial; padding: 10px;}
 div.panel {
   width: 150px; 
-  height: 150px; 
   padding: 10px;
   margin: 10px;
   background-color: #225; 
@@ -10,7 +9,6 @@ div.panel {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
 }
-/* .panelToggler {margin: 5px; padding: 2px;} */
 .panelToggler.closed {color: #555;}
 
 #panel3wrapper, {position: absolute;}
