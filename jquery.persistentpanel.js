@@ -1,5 +1,5 @@
 // ---------------------------------------------
-// persistentPanel v1.20
+// persistentPanel v1.30
 // A jQuery plugin by Nathan Long
 // https://github.com/sleeplessgeek/persistentPanel
 // ---------------------------------------------
@@ -135,8 +135,10 @@
     // Get things started
     initialize();
 
+    var $clickArea = $(settings.clickArea).length > 0 ? $(settings.clickArea) : $(settings.toggler); 
+
     // Add namespaced click event listener
-    $(settings.toggler).bind('click.persistentPanel',function(e){
+    $clickArea.bind('click.persistentPanel',function(e){
       e.preventDefault();
       e.stopPropagation();
       switch($.data(panel, 'persistentPanelState')) {
@@ -157,6 +159,7 @@
   $.fn.persistentPanel.defaults = {
     togglerContents: {open: null, closed: null}, // To be determined by openDirection
     animations: {open: null, close: null}, // To be determined by openDirection
+    clickArea: null,
     cookieName: 'persistentPanel',
     defaultState: 'closed',
     openDirection: 'down',
@@ -170,9 +173,11 @@
       horizontalClose: function(duration, settings){
         // Determine opposite direction of openDirection
         var dir = settings.openDirection === 'left' ? 'right' : 'left';
+
+        var $clickArea = $(settings.clickArea).length > 0 ? $(settings.clickArea) : $(settings.toggler); 
         // Default mode will be to slide the panel off screen and back on,
         // leaving the toggler visible.
-        var dist = 0 - ($(this).outerWidth(true) - (($(this).outerWidth(true) - $(this).width()) / 2) - $(settings.toggler).outerWidth(true));
+        var dist = 0 - ($(this).outerWidth(true) - (($(this).outerWidth(true) - $(this).width()) / 2) - $clickArea.outerWidth(true));
         var animationOpts = {};
         animationOpts[dir] = dist + 'px';
          $(this).animate(animationOpts, duration);

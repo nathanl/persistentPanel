@@ -27,7 +27,7 @@ My apologies for any confusion.
 
 (See examples/index.html)
 
-## Options (as of v1.20)
+## Options (as of v1.30)
 
 <table>
   <thead>
@@ -61,6 +61,23 @@ My apologies for any confusion.
         of them will affect whether the other is open or closed on page
         load. If you have a single panel that you display on multiple
         pages, it should use the same cookie name on each page.
+      </td>
+    </tr>
+    <tr>
+      <td>clickArea</td>
+      <td>(the toggler element)</td>
+      <td>Any valid jQuery selector string</td>
+      <td>
+        Which element, when clicked, should open and close your panel?
+        Normally, this will be determined by the toggler setting, but
+        in some cases, you might want to specify a different area.
+        For example, you want the toggler contents to change from
+        one arrow to another when the panel opens and closes, but
+        you want to place that arrow inside a larger tab, and you
+        want the user to be able to click anywhere in the tab to
+        toggle the panel.
+        If you don't pass anything in for this option, the click
+        listener is attached to the toggler itself. 
       </td>
     </tr>
     <tr>
@@ -114,8 +131,15 @@ My apologies for any confusion.
       <td>'#panelToggler'</td>
       <td>Any valid jQuery selector string</td>
       <td>
-        Which element, when clicked, should open and close your
-        panel? Note: I **strongly** recommend that you use an ID for this
+        By default, which element, when clicked, should open and close your
+        panel? 
+        With default settings, the toggler will both be the click trigger for
+        the panel to open and close, and will contain a directional arrow
+        which changes directions when the panel is opened or closed.
+        Both of these behaviors can be overridden: if you set togglerContents
+        to false, the arrows won't change, and if you set clickArea to
+        something else, the click listener won't be attached to this element.
+        Note: I **strongly** recommend that you use an ID for this
         selector; you may have more than one panel on the screen at some
         point, and you don't want multiple togglers to affect the same panel.
         (If you're using the same ID more than once per page, you're Doing 
